@@ -20,14 +20,11 @@ import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 @Composable
 @Preview
 fun PokemonList(
-    showPokemonDetail: (pokemonName: String) -> Unit = {},
-    homeNavigation: () -> Unit = {},
-    favNavigation: () -> Unit = {}
+    showPokemonDetail: (pokemonName: String) -> Unit = {}, homeNavigation: () -> Unit = {}, favNavigation: () -> Unit = {}
 ) {
 
     val viewModel = viewModel<PokemonListViewModel>()
     val pokemonListFlow by viewModel.uiState.collectAsState()
-    viewModel.getPokemonList()
     Log.d("PokemonList.screen", "pokemonListFlow: $pokemonListFlow")
     LearningPathTheme {
         Scaffold(
@@ -35,9 +32,7 @@ fun PokemonList(
             content = { innerPadding ->
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     PokemonList(
-                        pokemonList = pokemonListFlow,
-                        innerPadding = innerPadding,
-                        showPokemonDetail = showPokemonDetail
+                        pokemonList = pokemonListFlow, innerPadding = innerPadding, showPokemonDetail = showPokemonDetail
                     )
                 }
             },
