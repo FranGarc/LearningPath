@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.franciscogarciagarzon.learningpath.ui.screens.navigation.BottomNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
@@ -20,10 +20,11 @@ import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 @Composable
 @Preview
 fun PokemonList(
-    showPokemonDetail: (pokemonName: String) -> Unit = {}, homeNavigation: () -> Unit = {}, favNavigation: () -> Unit = {}
+    showPokemonDetail: (pokemonName: String) -> Unit = {}, homeNavigation: () -> Unit = {}, favNavigation: () -> Unit = {},
+    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
 
-    val viewModel = viewModel<PokemonListViewModel>()
+
     val pokemonListFlow by viewModel.uiState.collectAsState()
     Log.d("PokemonList.screen", "pokemonListFlow: $pokemonListFlow")
     LearningPathTheme {
