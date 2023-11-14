@@ -7,7 +7,7 @@ data class PokemonDto(
 )
 
 fun pokemonUrlToSpriteUrl(url: String): String {
-    val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/"
+    val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
     val segments = url.split("/").toMutableList()
     segments.removeAll(listOf("", null))
     val id = segments.last()

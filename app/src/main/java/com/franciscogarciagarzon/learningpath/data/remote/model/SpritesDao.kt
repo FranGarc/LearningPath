@@ -1,6 +1,7 @@
 package com.franciscogarciagarzon.learningpath.data.remote.model
 
 
+import com.franciscogarciagarzon.learningpath.domain.model.SpritesDto
 import com.google.gson.annotations.SerializedName
 
 data class SpritesDao(
@@ -25,3 +26,16 @@ data class SpritesDao(
     @SerializedName("versions")
     val versions: Versions
 )
+
+fun SpritesDao.toSpritesDto(): SpritesDto {
+    return SpritesDto(
+        backDefault = this.backDefault,
+        backFemale = this.backFemale,
+        backShiny = this.backShiny,
+        backShinyFemale = this.backShinyFemale,
+        frontDefault = this.frontDefault,
+        frontFemale = this.frontFemale,
+        frontShiny = this.frontShiny,
+        frontShinyFemale = this.frontShinyFemale
+    )
+}
