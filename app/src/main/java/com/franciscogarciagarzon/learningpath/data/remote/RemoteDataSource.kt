@@ -1,9 +1,9 @@
 package com.franciscogarciagarzon.learningpath.data.remote
 
+import com.franciscogarciagarzon.learningpath.data.remote.model.toPokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
-import com.franciscogarciagarzon.learningpath.domain.model.toPokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.toPokemonListDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

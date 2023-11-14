@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,15 +16,17 @@ import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
 @Composable
-fun PokedexList(
+fun PokedexGrid(
     pokemonListData: PokemonListDto,
     innerPadding: PaddingValues,
     showPokemonDetail: (pokemonName: String) -> Unit
 ) {
-    LazyColumn(
-        modifier = androidx.compose.ui.Modifier.padding(innerPadding),
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 150.dp),
+        modifier = Modifier.padding(innerPadding),
         contentPadding = PaddingValues(10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(pokemonListData.pokemons.size) { index ->
             val pokemon = pokemonListData.pokemons[index]
@@ -38,7 +42,7 @@ fun PokedexList(
 
 @Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
-fun PokedexList1Preview() {
+fun PokemonList1Preview() {
     LearningPathTheme {
         PokedexList(
             pokemonListData = MockDataSource().getPokemonListDto(),

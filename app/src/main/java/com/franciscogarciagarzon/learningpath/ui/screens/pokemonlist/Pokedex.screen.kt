@@ -10,30 +10,48 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
 import com.franciscogarciagarzon.learningpath.ui.screens.navigation.BottomNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview
-fun PokemonList(
-    showPokemonDetail: (pokemonName: String) -> Unit = {}, homeNavigation: () -> Unit = {}, favNavigation: () -> Unit = {},
+fun PokedexList(
+    showPokemonDetail: (pokemonName: String) -> Unit = {},
+    homeNavigation: () -> Unit = {},
+    favNavigation: () -> Unit = {},
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
-
-
     val pokemonListFlow by viewModel.uiState.collectAsState()
     Log.d("PokemonList.screen", "pokemonListFlow: $pokemonListFlow")
+    Screen(
+        showPokemonDetail,
+        homeNavigation,
+        favNavigation,
+        pokemonListData = pokemonListFlow
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Screen(
+    showPokemonDetail: (pokemonName: String) -> Unit = {},
+    homeNavigation: () -> Unit = {},
+    favNavigation: () -> Unit = {},
+    pokemonListData: PokemonListDto = MockDataSource().getPokemonListDto()
+) {
     LearningPathTheme {
         Scaffold(
 
             content = { innerPadding ->
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    PokemonList(
-                        pokemonList = pokemonListFlow, innerPadding = innerPadding, showPokemonDetail = showPokemonDetail
+//                    PokedexList(
+                    PokedexGrid(
+                        pokemonListData = pokemonListData, innerPadding = innerPadding, showPokemonDetail = showPokemonDetail
                     )
                 }
             },
@@ -44,19 +62,13 @@ fun PokemonList(
                 )
             },
         )
-
-
-        // A surface container using the 'background' color from the theme
-
     }
-
 }
 
-
-@Preview(showBackground = true)
+@Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
 fun PokemonListPreview() {
     LearningPathTheme {
-//        PokemonList()
+        Screen()
     }
 }

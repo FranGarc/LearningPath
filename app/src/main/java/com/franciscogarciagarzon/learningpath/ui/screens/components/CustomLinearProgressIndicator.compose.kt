@@ -10,6 +10,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.franciscogarciagarzon.learningpath.ui.extensions.lightenBy
+import com.franciscogarciagarzon.learningpath.ui.theme.PokeRed
 
 @Composable
 fun CustomLinearProgressIndicator(progress: Float) {
@@ -24,15 +26,15 @@ fun CustomLinearProgressIndicator(progress: Float) {
 }
 
 @Composable
-fun StatIndicator(statValue: Int) {
+fun StatIndicator(statValue: Int, modifier: Modifier = Modifier, color: Color = PokeRed) {
     LinearProgressIndicator(
         progress = statValue / 255f,
-        color = Color.Red,
-        modifier = Modifier
+        color = color,
+        modifier = modifier
             .height(35.dp)
             .padding(top = 5.dp, bottom = 5.dp)
             .clip(RoundedCornerShape(16.dp)),
-        trackColor = Color.White
+        trackColor = color.lightenBy(0.75f)
     )
 }
 

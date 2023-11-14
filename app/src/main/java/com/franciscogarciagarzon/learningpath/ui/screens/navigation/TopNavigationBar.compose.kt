@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -15,8 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
-import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel40
-import com.franciscogarciagarzon.learningpath.ui.theme.Purple80
+import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
+import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,15 +30,15 @@ fun TopNavBar(
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = Purple80,
-            scrolledContainerColor = Purple80,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            scrolledContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
             navigationIconContentColor = Color.Black,
             titleContentColor = Color.Black,
             actionIconContentColor = Color.White
         ),
-        modifier = modifier.background(color = Purple80),
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background),
         title = {
-            BoldLabel40(
+            RegularLabel(
                 modifier = Modifier.fillMaxWidth(),
                 text = title.capitalizeLP(),
                 textAlignment = TextAlign.Center,

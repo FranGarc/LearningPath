@@ -11,7 +11,7 @@ interface PokeApi {
 
     @GET("pokemon?")
     fun getPokemonList(
-        @Query("limit") limit: Int = 100,
+        @Query("limit") limit: Int = 1500,
         @Query("offset") offset: Int = 0,
     ): Call<PokemonListDao>
 

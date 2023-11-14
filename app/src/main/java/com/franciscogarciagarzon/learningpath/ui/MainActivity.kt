@@ -10,9 +10,9 @@ import androidx.compose.material.icons.filled.Home
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.franciscogarciagarzon.learningpath.ui.screens.navigation.Screen
+import com.franciscogarciagarzon.learningpath.ui.screens.navigation.ScreenRouter
 import com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail.PokemonDetail
-import com.franciscogarciagarzon.learningpath.ui.screens.pokemonlist.PokemonList
+import com.franciscogarciagarzon.learningpath.ui.screens.pokemonlist.PokedexList
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,17 +22,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             NavHost(
-                navController = navController, startDestination = Screen.PokemonList.route
+                navController = navController, startDestination = ScreenRouter.PokemonList.route
             ) {
-                composable(Screen.PokemonList.route) {
-                    PokemonList(showPokemonDetail = { pokemonName ->
+                composable(ScreenRouter.PokemonList.route) {
+                    PokedexList(showPokemonDetail = { pokemonName ->
                         Log.d("MainActivity", "navigation lambda showPokemonDetail ($pokemonName)")
                         navController.navigate(
-                            route = Screen.PokemonDetail.createRoute(pokemonName)
+                            route = ScreenRouter.PokemonDetail.createRoute(pokemonName)
                         )
-                    }, favNavigation = { navController.navigate(route = Screen.PokemonDetail.createRoute("charizard")) })
+                    }, favNavigation = { navController.navigate(route = ScreenRouter.PokemonDetail.createRoute("charizard")) })
                 }
-                composable(route = Screen.PokemonDetail.route) { backStackEntry ->
+                composable(route = ScreenRouter.PokemonDetail.route) { backStackEntry ->
                     val pokemonName = backStackEntry.arguments?.getString("pokemonName")
                     requireNotNull(pokemonName)
                     PokemonDetail(id = pokemonName, navigateUp = {
@@ -43,8 +43,6 @@ class MainActivity : ComponentActivity() {
                 }
 
             }
-
-//            PokemonList()
         }
     }
 }

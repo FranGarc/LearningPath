@@ -1,10 +1,10 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
@@ -18,6 +18,7 @@ fun BoldLabel(text: String, modifier: Modifier = Modifier, textAlignment: TextAl
         modifier = modifier
             .padding(5.dp, end = 5.dp),
         text = text.capitalize(locale = Locale.current),
+        color = Color.Black,
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
         textAlign = textAlignment
@@ -25,28 +26,40 @@ fun BoldLabel(text: String, modifier: Modifier = Modifier, textAlignment: TextAl
 }
 
 @Composable
-fun BoldLabel40(text: String, modifier: Modifier = Modifier, textAlignment: TextAlign) {
+fun BoldLabel40(text: String, modifier: Modifier = Modifier, textAlignment: TextAlign = TextAlign.Justify) {
     Text(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(start = 5.dp, end = 5.dp),
         text = text.capitalize(locale = Locale.current),
+        textAlign = textAlignment,
+        color = Color.Black,
         fontSize = 40.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = textAlignment
     )
 }
 
 @Composable
-fun BoldLabel30(text: String, modifier: Modifier = Modifier, textAlignment: TextAlign) {
+fun BoldLabel30(text: String, modifier: Modifier = Modifier, textAlignment: TextAlign = TextAlign.Justify) {
     Text(
         modifier = modifier
-            .fillMaxWidth()
             .padding(start = 5.dp, end = 5.dp),
         text = text.capitalize(locale = Locale.current),
+        color = Color.Black,
         fontSize = 30.sp,
         fontWeight = FontWeight.Bold,
         textAlign = textAlignment
     )
 }
 
+@Composable
+fun BoldLabel20(text: String, modifier: Modifier = Modifier, textAlignment: TextAlign = TextAlign.Justify) {
+    Text(
+        modifier = modifier
+            .padding(start = 5.dp, end = 5.dp),
+        text = text.capitalize(locale = Locale.current),
+        color = Color.Black,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = textAlignment
+    )
+}

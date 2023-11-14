@@ -8,6 +8,7 @@ import com.franciscogarciagarzon.learningpath.data.mock.model.StatDao
 import com.franciscogarciagarzon.learningpath.data.mock.model.StatsDao
 import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -67,6 +68,12 @@ class MockDataSource : DatasourceAdapter {
         ),
         types = listOf("normal")
     )
+
+    fun getPokemonListDto(): PokemonListDto = PokemonListDto(pokemonList.pokemons.map { pokemon ->
+        PokemonDto(
+            name = pokemon.name, defaultSprite = pokemon.defaultSprite, url = pokemon.url
+        )
+    })
 
     override suspend fun getPokemonList(): Flow<PokemonListDto> = flow {
         delay(1000)
