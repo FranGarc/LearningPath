@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.ui.screens.navigation.TopNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
@@ -38,7 +39,8 @@ fun Screen(pokemonDetail: PokemonDetailDto, navigateUp: () -> Unit = {}) {
         }, content = { innerPadding ->
             Log.d("PokemonDetailScreen", "Composable pokemonDetail: $pokemonDetail")
 //            PokemonDetail(pokemonDetail, innerPadding)
-            PokemonInfo(pokemonDetail, innerPadding)
+            if (pokemonDetail.isLoaded())
+                PokemonInfo(pokemonDetail, innerPadding)
         })
     }
 }
@@ -49,6 +51,7 @@ fun Screen(pokemonDetail: PokemonDetailDto, navigateUp: () -> Unit = {}) {
 //@Preview(name = "PIXEL_XL", device = Devices.NEXUS_10, showSystemUi = true)
 @Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
-fun previewDetail() {
-    Screen(pokemonDetail = PokemonDetailDto(), navigateUp = {})
+fun PreviewDetail() {
+    Screen(
+        pokemonDetail = MockDataSource().getPokemonDetailDto(), navigateUp = {})
 }

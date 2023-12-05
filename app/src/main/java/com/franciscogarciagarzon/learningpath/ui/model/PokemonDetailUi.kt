@@ -2,6 +2,7 @@ package com.franciscogarciagarzon.learningpath.ui.model
 
 import androidx.compose.ui.graphics.Color
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.domain.model.URL
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
 
 
@@ -18,13 +19,17 @@ data class PokemonDetailUi(
     ) {
     fun printableId(): String = "#" + id.toString().padStart(length = 3, padChar = '0')
     fun printableWeight(): String = "${weight}Kg"
-    fun printableHeight(): String = "${height}Kg"
-    fun getColors(): List<Color> = if (types.size > 1) {
+    fun printableHeight(): String = "${height}Cm"
+    fun typeColors(): List<Color> = if (types.size > 1) {
         types.map { type -> type.color }.toList()
     } else {
         listOf(types.first().color, types.first().color)
     }
 
+    fun artUrl(): URL = sprites.frontSpriteUrl()
+//        sprites.male.front.ifEmpty {
+//        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/$id.svg"
+//    }
 }
 
 fun PokemonDetailDto.toPokemonDetailUi() = PokemonDetailUi(

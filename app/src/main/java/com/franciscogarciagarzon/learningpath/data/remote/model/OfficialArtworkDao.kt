@@ -3,9 +3,9 @@ package com.franciscogarciagarzon.learningpath.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DreamWorld(
+data class OfficialArtworkDao(
     @SerializedName("front_default")
-    val frontDefault: String,
-    @SerializedName("front_female")
-    val frontFemale: Any?
+    val frontDefault: String?,
+    @SerializedName("front_shiny")
+    val frontShiny: String?,
 )

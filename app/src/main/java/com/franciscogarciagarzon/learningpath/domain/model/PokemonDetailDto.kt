@@ -9,7 +9,10 @@ data class PokemonDetailDto(
     val weight: Int = -1,
     val types: List<String> = listOf("normal", "ghost"),
     val id: Int = -1
-)
+) {
+    fun isLoaded(): Boolean = (id != -1)
+}
+
 
 
 

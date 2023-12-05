@@ -2,11 +2,11 @@ package com.franciscogarciagarzon.learningpath.data.mock.model
 
 data class SpritesDao(
     val backDefault: String = "",
-    val backFemale: String? = null,
+    val backFemale: String = "",
     val backShiny: String = "",
-    val backShinyFemale: String? = null,
+    val backShinyFemale: String = "",
     val frontDefault: String = "",
-    val frontFemale: String? = null,
+    val frontFemale: String = "",
     val frontShiny: String = "",
-    val frontShinyFemale: String? = null,
+    val frontShinyFemale: String = "",
 )

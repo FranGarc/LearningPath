@@ -3,11 +3,11 @@ package com.franciscogarciagarzon.learningpath.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Other(
+data class OtherDao(
     @SerializedName("dream_world")
-    val dreamWorld: DreamWorld,
+    val dreamWorld: DreamWorldDao,
     @SerializedName("home")
-    val home: Home,
+    val home: HomeDao,
     @SerializedName("official-artwork")
-    val officialArtwork: OfficialArtwork
+    val officialArtwork: OfficialArtworkDao
 )

@@ -40,8 +40,8 @@ fun PokemonInfo(
 ) {
     val pokemon: PokemonDetailUi = pokemonDetail.toPokemonDetailUi()
     val gradient = Brush.verticalGradient(
-        colors = pokemon.getColors(),
-        startY = 600f, endY = 800f
+        colors = pokemon.typeColors(),
+        startY = 200f, endY = 800f
     )
 
     Surface(
@@ -96,7 +96,8 @@ fun PokemonInfo(
                         }
                     }
                     RemoteImage(
-                        imageUrl = pokemonDetail.sprites.frontDefault,
+//                        imageUrl = pokemonDetail.sprites.frontDefault,
+                        imageUrl = pokemon.artUrl(),
                         placeholderResource = R.drawable.pokeball_icon,
                         errorResource = R.drawable.pokeball_icon,
                         contentDescription = pokemonDetail.name,

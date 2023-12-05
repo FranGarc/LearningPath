@@ -10,6 +10,9 @@ import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
+import com.franciscogarciagarzon.learningpath.domain.model.SpritesDto
+import com.franciscogarciagarzon.learningpath.domain.model.StatsDto
+import com.franciscogarciagarzon.learningpath.domain.model.toStatDto
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -44,6 +47,7 @@ class MockDataSource : DatasourceAdapter {
 
 
     private val pokemonDetail = PokemonDetailDao(
+
         name = "Ditto",
         baseExperience = 101,
         height = 3,
@@ -59,14 +63,34 @@ class MockDataSource : DatasourceAdapter {
         sprites = SpritesDao(
             frontDefault = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
             backDefault = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png",
-            frontFemale = null,
-            backFemale = null,
+            frontFemale = "",
+            backFemale = "",
             frontShiny = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png",
             backShiny = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/132.png",
-            frontShinyFemale = null,
-            backShinyFemale = null,
+            frontShinyFemale = "",
+            backShinyFemale = "",
         ),
         types = listOf("normal")
+    )
+
+    fun getPokemonDetailDto(): PokemonDetailDto = PokemonDetailDto(
+        baseExperience = pokemonDetail.baseExperience,
+        height = pokemonDetail.height,
+        name = pokemonDetail.name,
+        sprites = SpritesDto(
+            frontDefault = pokemonDetail.sprites.frontDefault,
+        ),
+        stats = StatsDto(
+            hp = pokemonDetail.stats.hp.toStatDto(),
+            attack = pokemonDetail.stats.attack.toStatDto(),
+            defense = pokemonDetail.stats.defense.toStatDto(),
+            speed = pokemonDetail.stats.speed.toStatDto(),
+            specialAttack = pokemonDetail.stats.specialAttack.toStatDto(),
+            specialDefense = pokemonDetail.stats.specialDefense.toStatDto(),
+        ),
+        weight = pokemonDetail.weight,
+        types = pokemonDetail.types,
+        id = 30
     )
 
     fun getPokemonListDto(): PokemonListDto = PokemonListDto(pokemonList.pokemons.map { pokemon ->
