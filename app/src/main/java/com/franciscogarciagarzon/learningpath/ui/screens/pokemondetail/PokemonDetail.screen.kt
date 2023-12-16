@@ -11,7 +11,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
+import com.franciscogarciagarzon.learningpath.ui.model.toPokemonDetailUi
 import com.franciscogarciagarzon.learningpath.ui.screens.navigation.TopNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
@@ -24,13 +25,29 @@ fun PokemonDetail(
 
     val pokemonDetail by viewModel.uiState.collectAsState()
     viewModel.getPokemonDetail(pokemonId = id)
-    Screen(pokemonDetail = pokemonDetail, navigateUp = navigateUp)
+    val tabs = viewModel.tabs
+    val tabIndex = viewModel.tabIndex.collectAsState()
+    val onClickedTab: (Int) -> Unit = viewModel::updateTabIndex
+    Screen(
+        pokemonDetail = pokemonDetail,
+        navigateUp = navigateUp,
+        tabs = tabs,
+        tabIndex = tabIndex.value,
+        onClickedTab = onClickedTab
+
+    )
 
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Screen(pokemonDetail: PokemonDetailDto, navigateUp: () -> Unit = {}) {
+fun Screen(
+    pokemonDetail: PokemonDetailUi,
+    navigateUp: () -> Unit = {},
+    tabs: List<String>,
+    tabIndex: Int,
+    onClickedTab: (Int) -> Unit
+) {
     LearningPathTheme {
         Scaffold(topBar = {
             TopNavBar(
@@ -40,7 +57,13 @@ fun Screen(pokemonDetail: PokemonDetailDto, navigateUp: () -> Unit = {}) {
             Log.d("PokemonDetailScreen", "Composable pokemonDetail: $pokemonDetail")
 //            PokemonDetail(pokemonDetail, innerPadding)
             if (pokemonDetail.isLoaded())
-                PokemonInfo(pokemonDetail, innerPadding)
+                PokemonInfo(
+                    pokemonDetail,
+                    innerPadding,
+                    tabs = tabs,
+                    tabIndex = tabIndex,
+                    onClickedTab = onClickedTab
+                )
         })
     }
 }
@@ -53,5 +76,10 @@ fun Screen(pokemonDetail: PokemonDetailDto, navigateUp: () -> Unit = {}) {
 @Composable
 fun PreviewDetail() {
     Screen(
-        pokemonDetail = MockDataSource().getPokemonDetailDto(), navigateUp = {})
+        pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
+        navigateUp = {},
+        tabs = listOf("About", "Base Stats"),
+        tabIndex = 0,
+        onClickedTab = { }
+    )
 }

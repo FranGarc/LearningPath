@@ -25,9 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.franciscogarciagarzon.learningpath.R
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
-import com.franciscogarciagarzon.learningpath.ui.model.toPokemonDetailUi
 import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel20
 import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel30
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
@@ -35,10 +33,13 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.TypeComponen
 
 @Composable
 fun PokemonInfo(
-    pokemonDetail: PokemonDetailDto,
+    pokemonDetail: PokemonDetailUi,
     innerPadding: PaddingValues,
+    onClickedTab: (Int) -> Unit,
+    tabs: List<String>,
+    tabIndex: Int,
 ) {
-    val pokemon: PokemonDetailUi = pokemonDetail.toPokemonDetailUi()
+    val pokemon: PokemonDetailUi = pokemonDetail
     val gradient = Brush.verticalGradient(
         colors = pokemon.typeColors(),
         startY = 200f, endY = 800f
@@ -112,7 +113,14 @@ fun PokemonInfo(
                         .background(color = White)
                         .verticalScroll(state = rememberScrollState())
                 ) {
-                    StatBlock(stats = pokemon.stats)
+                    PokemonTabLayout(
+                        onClick = onClickedTab,
+                        tabs = tabs,
+                        tabIndex = tabIndex,
+                        pokemonDetailUi = pokemonDetail
+                    )
+//                    PokemonInfoStats(stats = pokemon.stats)
+//                    StatBlock(stats = pokemon.stats)
 
                 }
             }
@@ -124,8 +132,13 @@ fun PokemonInfo(
 
 @Composable
 @Preview(showBackground = true)
-fun PreviewPokemonInfo(
-    pokemonDetail: PokemonDetailDto = PokemonDetailDto(), innerPadding: PaddingValues = PaddingValues()
-) {
-    PokemonInfo(pokemonDetail, innerPadding)
+fun PreviewPokemonInfo() {
+    PokemonInfo(
+        pokemonDetail = PokemonDetailUi(),
+        innerPadding = PaddingValues(),
+        tabs = listOf("About", "Base Stats"),
+        tabIndex = 1,
+        onClickedTab = {}
+    )
+
 }
