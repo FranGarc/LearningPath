@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
@@ -23,6 +24,7 @@ fun TypeComponent(pokemonType: TypeUi) {
             .background(color = pokemonType.color.lightenBy(0.45f))
     ) {
         RegularLabel(
+            color = Color.Black,
             text = pokemonType.type.name.capitalizeLP(),
             modifier = Modifier.padding(5.dp)
         )

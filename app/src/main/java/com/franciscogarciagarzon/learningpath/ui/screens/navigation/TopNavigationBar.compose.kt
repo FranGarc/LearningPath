@@ -12,12 +12,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
-import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,12 +29,12 @@ fun TopNavBar(
     TopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
-            scrolledContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            navigationIconContentColor = Color.Black,
-            titleContentColor = Color.Black,
-            actionIconContentColor = Color.White
+            scrolledContainerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.surfaceTint,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
-        modifier = modifier.background(color = MaterialTheme.colorScheme.background),
+        modifier = modifier.background(color = MaterialTheme.colorScheme.primaryContainer),
         title = {
             RegularLabel(
                 modifier = Modifier.fillMaxWidth(),

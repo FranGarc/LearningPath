@@ -1,17 +1,21 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail
 
+import android.content.res.Configuration
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonDetailUi
+import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 
 @Composable
 fun PokemonTabLayout(
@@ -22,13 +26,23 @@ fun PokemonTabLayout(
     pokemonDetailUi: PokemonDetailUi
 ) {
 //    val tabIndex = viewModel.tabIndex.collectAsState()
-    Column(modifier = Modifier.fillMaxWidth()) {
-        TabRow(selectedTabIndex = tabIndex) {
+    Surface {
+
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        TabRow(
+            selectedTabIndex = tabIndex,
+
+            ) {
 //            viewModel.tabs.forEachIndexed { index, title ->
             tabs.forEachIndexed { index, title ->
                 Log.d("PokemonTabLayout", "title: $title || index: $index")
                 Tab(
-                    text = { Text(title) },
+                    modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
+                    text = { RegularLabel(title) },
                     selected = tabIndex == index,
                     onClick = { onClick(index) },
 //                    onClick = { viewModel.updateTabIndex(index) },
@@ -51,7 +65,12 @@ fun PokemonTabLayout(
 
 }
 
-@Preview(showBackground = true)
+@Composable
+fun CustomTabIndicator(selectedTabIndex: Int) {
+
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TabLayoutPreview() {
     PokemonTabLayout(

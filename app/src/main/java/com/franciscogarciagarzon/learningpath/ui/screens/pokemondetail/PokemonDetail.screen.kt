@@ -1,5 +1,6 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail
 
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,7 +18,6 @@ import com.franciscogarciagarzon.learningpath.ui.screens.navigation.TopNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonDetail(
     id: String, navigateUp: () -> Unit = {}, viewModel: PokemonDetailViewModel = hiltViewModel()
@@ -68,6 +68,7 @@ fun Screen(
     }
 }
 
+@Preview(name = "PIXEL Dark", device = Devices.PIXEL, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(name = "PIXEL", device = Devices.PIXEL, showSystemUi = true)
 @Preview(name = "PIXEL2", device = Devices.PIXEL_2, showSystemUi = true)
 @Preview(name = "PIXEL3", device = Devices.PIXEL_3, showSystemUi = true)
@@ -79,7 +80,7 @@ fun PreviewDetail() {
         pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
         navigateUp = {},
         tabs = listOf("About", "Base Stats"),
-        tabIndex = 0,
+        tabIndex = 1,
         onClickedTab = { }
     )
 }

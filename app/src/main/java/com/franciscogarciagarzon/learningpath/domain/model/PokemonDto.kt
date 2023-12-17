@@ -1,9 +1,11 @@
 package com.franciscogarciagarzon.learningpath.domain.model
 
+import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonDao
+
 data class PokemonDto(
     val defaultSprite: String,
     val name: String,
-    val url: String
+    val url: URL
 )
 
 fun pokemonUrlToSpriteUrl(url: String): String {
@@ -16,7 +18,7 @@ fun pokemonUrlToSpriteUrl(url: String): String {
 
 }
 
-fun com.franciscogarciagarzon.learningpath.data.remote.model.PokemonDao.toPokemonDto(): PokemonDto {
+fun PokemonDao.toPokemonDto(): PokemonDto {
     return PokemonDto(
         defaultSprite = pokemonUrlToSpriteUrl(this.url),
         name = this.name,

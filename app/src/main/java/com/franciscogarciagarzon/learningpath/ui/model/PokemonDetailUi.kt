@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.URL
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
+import com.franciscogarciagarzon.learningpath.ui.extensions.darkenBy
+import com.franciscogarciagarzon.learningpath.ui.extensions.lightenBy
 
 
 data class PokemonDetailUi(
@@ -25,7 +27,7 @@ data class PokemonDetailUi(
     fun typeColors(): List<Color> = if (types.size > 1) {
         types.map { type -> type.color }.toList()
     } else {
-        listOf(types.first().color, types.first().color)
+        listOf(types.first().color.darkenBy(.25f), types.first().color.lightenBy(.25f))
     }
 
     fun artUrl(): URL = sprites.frontSpriteUrl()

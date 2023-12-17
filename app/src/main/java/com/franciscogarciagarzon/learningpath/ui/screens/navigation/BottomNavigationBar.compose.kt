@@ -28,18 +28,18 @@ fun BottomNavBar(
         NavigationBarItem(
             selected = true,
             colors = colors(
-                selectedIconColor = MaterialTheme.colorScheme.primary,
-                selectedTextColor = MaterialTheme.colorScheme.primary,
-                indicatorColor = MaterialTheme.colorScheme.secondary,
-                unselectedIconColor = MaterialTheme.colorScheme.tertiary,
-                unselectedTextColor = MaterialTheme.colorScheme.tertiary,
+                selectedIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                indicatorColor = MaterialTheme.colorScheme.inversePrimary,
+                unselectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                unselectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
             ),
             onClick = {
                 Log.d("NavigationBar", "Home clicked")
                 homeNavigation()
             },
             label = { Text("Home") },
-            icon = { Icon(Icons.Default.Home, "Home", tint = MaterialTheme.colorScheme.onPrimaryContainer) }
+            icon = { Icon(Icons.Default.Home, "Home", tint = MaterialTheme.colorScheme.surfaceTint) }
         )
         NavigationBarItem(
             selected = false,
@@ -48,7 +48,7 @@ fun BottomNavBar(
                 favNavigation()
             },
             label = { Text("Fav") },
-            icon = { Icon(Icons.Default.Favorite, "Fav", tint = MaterialTheme.colorScheme.onPrimaryContainer) }
+            icon = { Icon(Icons.Default.Favorite, "Fav", tint = MaterialTheme.colorScheme.surfaceTint) }
         )
     }
 

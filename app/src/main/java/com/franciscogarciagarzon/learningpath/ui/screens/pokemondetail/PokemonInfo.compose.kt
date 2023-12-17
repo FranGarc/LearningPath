@@ -14,20 +14,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.franciscogarciagarzon.learningpath.R
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
 import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel20
-import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel30
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
 import com.franciscogarciagarzon.learningpath.ui.screens.components.TypeComponent
 
@@ -55,10 +54,17 @@ fun PokemonInfo(
         ) {
             Column(modifier = Modifier.padding(top = 16.dp)) {
                 Spacer(modifier = Modifier.padding(top = 60.dp))
+                val splittedNameParts = pokemon.name.split("-").toMutableList()
                 Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    BoldLabel30(text = pokemon.name, textAlignment = TextAlign.Center)
+                    BoldLabel20(text = splittedNameParts.first(), textAlignment = TextAlign.Center)
+                    BoldLabel20(text = pokemon.printableId(), textAlignment = TextAlign.End, modifier = Modifier.weight(1f))
+
+
+                }
+                splittedNameParts.removeFirst()
+                Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    BoldLabel20(text = splittedNameParts.joinToString(separator = " "), textAlignment = TextAlign.Center)
                     Spacer(modifier = Modifier.weight(1f))
-                    BoldLabel20(text = pokemon.printableId(), textAlignment = TextAlign.End)
                 }
                 Spacer(modifier = Modifier.weight(0.1f))
 
@@ -90,7 +96,7 @@ fun PokemonInfo(
                                 .height(50.dp)
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                                .background(color = White)
+                                .background(color = MaterialTheme.colorScheme.background)
 
                         ) {
 
@@ -110,7 +116,7 @@ fun PokemonInfo(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(color = White)
+                        .background(color = MaterialTheme.colorScheme.background)
                         .verticalScroll(state = rememberScrollState())
                 ) {
                     PokemonTabLayout(
@@ -134,7 +140,7 @@ fun PokemonInfo(
 @Preview(showBackground = true)
 fun PreviewPokemonInfo() {
     PokemonInfo(
-        pokemonDetail = PokemonDetailUi(),
+        pokemonDetail = PokemonDetailUi(id = 10249, name = "Enamorus-therian"),
         innerPadding = PaddingValues(),
         tabs = listOf("About", "Base Stats"),
         tabIndex = 1,

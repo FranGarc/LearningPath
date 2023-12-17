@@ -15,3 +15,17 @@ fun Color.lightenBy(amount: Float): Color {
         blue = (blue * (1 - amount) + amount)
     )
 }
+
+fun Color.darkenBy(amount: Float): Color {
+    val alpha = this.alpha
+    val red = this.red
+    val green = this.green
+    val blue = this.blue
+
+    return Color(
+        alpha = alpha,
+        red = (red * amount),
+        green = (green * amount),
+        blue = (blue * amount),
+    )
+}

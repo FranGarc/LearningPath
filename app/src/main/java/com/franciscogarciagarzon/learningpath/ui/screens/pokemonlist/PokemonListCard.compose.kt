@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
@@ -44,13 +43,14 @@ import androidx.palette.graphics.Palette
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
+import com.franciscogarciagarzon.learningpath.ui.model.PokemonUi
+import com.franciscogarciagarzon.learningpath.ui.model.toPokemonListUi
 import com.franciscogarciagarzon.learningpath.ui.theme.RobotoCondensed
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PokemonListCard(pokemon: PokemonDto, clickAction: () -> Unit) {
+fun PokemonListCard(pokemon: PokemonUi, clickAction: () -> Unit) {
     val defaultDominantColor = MaterialTheme.colorScheme.surface
     var dominantColor by remember {
         mutableStateOf(defaultDominantColor)
@@ -62,12 +62,13 @@ fun PokemonListCard(pokemon: PokemonDto, clickAction: () -> Unit) {
             .clip(RoundedCornerShape(10.dp))
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp))
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        dominantColor,
-                        defaultDominantColor
-                    )
-                )
+//                Brush.verticalGradient(
+//                    colors = listOf(
+//                        dominantColor,
+//                        defaultDominantColor
+//                    )
+//                )
+                MaterialTheme.colorScheme.secondaryContainer
             )
             .clickable { clickAction() },
 
@@ -109,6 +110,7 @@ fun PokemonListCard(pokemon: PokemonDto, clickAction: () -> Unit) {
                     .fillMaxWidth()
                     .padding(start = 10.dp),
                 text = pokemon.name.capitalize(locale = Locale.current),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 textAlign = TextAlign.Center,
                 fontFamily = RobotoCondensed,
                 fontSize = 20.sp,
@@ -124,7 +126,7 @@ fun PokemonListCard(pokemon: PokemonDto, clickAction: () -> Unit) {
 @Composable
 fun PokemonListCardPreview() {
     PokemonListCard(
-        pokemon = MockDataSource().getPokemonListDto().pokemons.first(),
+        pokemon = MockDataSource().getPokemonListDto().toPokemonListUi().pokemons.first(),
         clickAction = {}
     )
 }

@@ -14,7 +14,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
+import com.franciscogarciagarzon.learningpath.ui.model.PokemonListUi
+import com.franciscogarciagarzon.learningpath.ui.model.toPokemonListUi
 import com.franciscogarciagarzon.learningpath.ui.screens.navigation.BottomNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
@@ -32,7 +33,7 @@ fun PokedexList(
         showPokemonDetail,
         homeNavigation,
         favNavigation,
-        pokemonListData = pokemonListFlow
+        pokemonListData = pokemonListFlow.toPokemonListUi()
     )
 }
 
@@ -42,7 +43,7 @@ fun Screen(
     showPokemonDetail: (pokemonName: String) -> Unit = {},
     homeNavigation: () -> Unit = {},
     favNavigation: () -> Unit = {},
-    pokemonListData: PokemonListDto = MockDataSource().getPokemonListDto()
+    pokemonListData: PokemonListUi
 ) {
     LearningPathTheme {
         Scaffold(
@@ -69,6 +70,6 @@ fun Screen(
 @Composable
 fun PokemonListPreview() {
     LearningPathTheme {
-        Screen()
+        Screen(pokemonListData = MockDataSource().getPokemonListDto().toPokemonListUi())
     }
 }
