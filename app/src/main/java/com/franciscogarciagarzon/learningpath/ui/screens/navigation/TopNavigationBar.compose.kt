@@ -1,6 +1,8 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -18,7 +20,7 @@ import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Preview
 @Composable
 fun TopNavBar(
@@ -37,7 +39,9 @@ fun TopNavBar(
         modifier = modifier.background(color = MaterialTheme.colorScheme.primaryContainer),
         title = {
             RegularLabel(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .basicMarquee()
+                    .fillMaxWidth(),
                 text = title.capitalizeLP(),
                 textAlignment = TextAlign.Center,
             )

@@ -39,8 +39,8 @@ fun PokemonListElement(pokemon: PokemonDto, clickAction: () -> Unit) {
                 .fillMaxWidth(),
             imageUrl = pokemon.defaultSprite,
             contentDescription = pokemon.name,
-            errorResource = R.drawable.pokeball_icon,
-            placeholderResource = R.drawable.pokeball_icon
+            errorResource = R.drawable.ic_error,
+            placeholderResource = R.drawable.ic_pokeball_icon
         )
 
         Text(

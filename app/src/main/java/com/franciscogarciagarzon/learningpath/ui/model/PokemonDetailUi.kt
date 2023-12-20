@@ -25,9 +25,9 @@ data class PokemonDetailUi(
     fun printableWeight(): String = "${weight}Kg"
     fun printableHeight(): String = "${height}Cm"
     fun typeColors(): List<Color> = if (types.size > 1) {
-        types.map { type -> type.color }.toList()
+        listOf(types.first().color.darkenBy(.4f), types.last().color.lightenBy(.25f))
     } else {
-        listOf(types.first().color.darkenBy(.25f), types.first().color.lightenBy(.25f))
+        listOf(types.first().color.darkenBy(.4f), types.first().color.lightenBy(.1f))
     }
 
     fun artUrl(): URL = sprites.frontSpriteUrl()

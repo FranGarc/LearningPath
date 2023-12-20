@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         navController.navigate(
                             route = ScreenRouter.PokemonDetail.createRoute(pokemonName)
                         )
-                    }, favNavigation = { navController.navigate(route = ScreenRouter.PokemonDetail.createRoute("charizard")) })
+                    }, favNavigation = { navController.navigate(route = ScreenRouter.PokemonDetail.createRoute("ogerpon-cornerstone-mask")) })
                 }
                 composable(route = ScreenRouter.PokemonDetail.route) { backStackEntry ->
                     val pokemonName = backStackEntry.arguments?.getString("pokemonName")

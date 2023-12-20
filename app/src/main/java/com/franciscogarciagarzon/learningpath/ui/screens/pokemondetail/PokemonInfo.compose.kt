@@ -1,7 +1,9 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail
 
 //import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi.toPokemonDetailUi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,6 +32,7 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel20
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
 import com.franciscogarciagarzon.learningpath.ui.screens.components.TypeComponent
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PokemonInfo(
     pokemonDetail: PokemonDetailUi,
@@ -39,33 +42,42 @@ fun PokemonInfo(
     tabIndex: Int,
 ) {
     val pokemon: PokemonDetailUi = pokemonDetail
-    val gradient = Brush.verticalGradient(
+    val typeColorsGradient = Brush.verticalGradient(
         colors = pokemon.typeColors(),
-        startY = 200f, endY = 800f
+        startY = 500f, endY = 800f
     )
+
+
 
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
-                .background(gradient)
+                .background(typeColorsGradient)
                 .fillMaxSize()
         ) {
             Column(modifier = Modifier.padding(top = 16.dp)) {
                 Spacer(modifier = Modifier.padding(top = 60.dp))
-                val splittedNameParts = pokemon.name.split("-").toMutableList()
-                Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    BoldLabel20(text = splittedNameParts.first(), textAlignment = TextAlign.Center)
-                    BoldLabel20(text = pokemon.printableId(), textAlignment = TextAlign.End, modifier = Modifier.weight(1f))
 
 
-                }
-                splittedNameParts.removeFirst()
+
                 Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    BoldLabel20(text = splittedNameParts.joinToString(separator = " "), textAlignment = TextAlign.Center)
-                    Spacer(modifier = Modifier.weight(1f))
+                    BoldLabel20(
+                        text = pokemon.name,
+                        textAlignment = TextAlign.Start,
+                        modifier = Modifier
+                            .weight(1f)
+                            .basicMarquee()
+                    )
+                    BoldLabel20(
+                        text = pokemon.printableId(),
+                        textAlignment = TextAlign.End,
+                        modifier = Modifier.weight(0.5f)
+                    )
                 }
+
+
                 Spacer(modifier = Modifier.weight(0.1f))
 
                 Row(
@@ -76,7 +88,6 @@ fun PokemonInfo(
                 ) {
                     val types = pokemon.types
                     TypeComponent(types.first())
-//                Spacer(modifier = Modifier.weight(0.1f))
                     if (types.size > 1) {
                         TypeComponent(types.last())
                     }
@@ -102,15 +113,17 @@ fun PokemonInfo(
 
                         }
                     }
-                    RemoteImage(
+                    Box {
+                        RemoteImage(
 //                        imageUrl = pokemonDetail.sprites.frontDefault,
-                        imageUrl = pokemon.artUrl(),
-                        placeholderResource = R.drawable.pokeball_icon,
-                        errorResource = R.drawable.pokeball_icon,
-                        contentDescription = pokemonDetail.name,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
+                            imageUrl = pokemon.artUrl(),
+                            placeholderResource = R.drawable.ic_pokeball_icon,
+                            errorResource = R.drawable.ic_error,
+                            contentDescription = pokemonDetail.name,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                        )
+                    }
                 }
 
                 Column(
@@ -125,12 +138,8 @@ fun PokemonInfo(
                         tabIndex = tabIndex,
                         pokemonDetailUi = pokemonDetail
                     )
-//                    PokemonInfoStats(stats = pokemon.stats)
-//                    StatBlock(stats = pokemon.stats)
-
                 }
             }
-
         }
     }
 }
@@ -140,7 +149,7 @@ fun PokemonInfo(
 @Preview(showBackground = true)
 fun PreviewPokemonInfo() {
     PokemonInfo(
-        pokemonDetail = PokemonDetailUi(id = 10249, name = "Enamorus-therian"),
+        pokemonDetail = PokemonDetailUi(id = 10249, name = "ogerpon-cornerstone-mask-que.te.cagas"),
         innerPadding = PaddingValues(),
         tabs = listOf("About", "Base Stats"),
         tabIndex = 1,

@@ -50,8 +50,8 @@ fun PokemonDetail(
 
             RemoteImage(
                 imageUrl = pokemonDetail.sprites.frontDefault,
-                placeholderResource = R.drawable.pokeball_icon,
-                errorResource = R.drawable.pokeball_icon,
+                placeholderResource = R.drawable.ic_pokeball_icon,
+                errorResource = R.drawable.ic_error,
                 contentDescription = pokemonDetail.name,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

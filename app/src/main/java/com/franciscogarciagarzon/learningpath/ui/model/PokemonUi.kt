@@ -9,18 +9,26 @@ data class PokemonUi(
     val url: URL
 )
 
-fun pokemonUrlToSpriteUrl(pokemonUrl: URL): URL {
+fun PokemonUi.fallbackSpriteUrl(): String {
+    val segments = this.url.split("/").toMutableList()
+    val id = segments.last()
     val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+    return "$spriteUrl$id.png"
+}
+
+fun pokemonUrlToSpriteUrl(pokemonUrl: URL): URL {
+//    val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
     val segments = pokemonUrl.split("/").toMutableList()
     segments.removeAll(listOf("", null))
     val id = segments.last()
-
-    return "$spriteUrl$id.png"
+    val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/$id.svg"
+//    return "$spriteUrl$id.png"
+    return spriteUrl
 
 }
 
 fun PokemonDto.toPokemonUi() = PokemonUi(
-    defaultSprite = this.defaultSprite,
+    defaultSprite = pokemonUrlToSpriteUrl(this.url),
     name = this.name,
     url = this.url
 )
