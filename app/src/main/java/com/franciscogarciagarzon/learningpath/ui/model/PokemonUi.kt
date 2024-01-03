@@ -11,13 +11,12 @@ data class PokemonUi(
 
 fun PokemonUi.fallbackSpriteUrl(): String {
     val segments = this.url.split("/").toMutableList()
-    val id = segments.last()
+    val id = segments.dropLast(1).last()
     val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
     return "$spriteUrl$id.png"
 }
 
 fun pokemonUrlToSpriteUrl(pokemonUrl: URL): URL {
-//    val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
     val segments = pokemonUrl.split("/").toMutableList()
     segments.removeAll(listOf("", null))
     val id = segments.last()
