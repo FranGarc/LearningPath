@@ -7,6 +7,7 @@ import com.franciscogarciagarzon.learningpath.data.mock.model.SpritesDao
 import com.franciscogarciagarzon.learningpath.data.mock.model.StatDao
 import com.franciscogarciagarzon.learningpath.data.mock.model.StatsDao
 import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
+import com.franciscogarciagarzon.learningpath.domain.model.AbilityDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
@@ -90,7 +91,8 @@ class MockDataSource : DatasourceAdapter {
         ),
         weight = pokemonDetail.weight,
         types = pokemonDetail.types,
-        id = 30
+        id = 30,
+        abilities = listOf(AbilityDto(name = "compound-eyes", abilityUrl = "https://pokeapi.co/api/v2/ability/132/"), AbilityDto(name = "friend-guard", abilityUrl = "https://pokeapi.co/api/v2/ability/132/"))
     )
 
     fun getPokemonListDto(): PokemonListDto = PokemonListDto(pokemonList.pokemons.map { pokemon ->

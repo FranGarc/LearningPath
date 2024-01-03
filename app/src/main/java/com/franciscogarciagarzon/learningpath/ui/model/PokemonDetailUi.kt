@@ -17,6 +17,7 @@ data class PokemonDetailUi(
     val types: List<TypeUi> = listOf(TypeUi.Normal),
     val stats: StatsUi = StatsUi(),
     val baseExperience: Int = -1,
+    val abilities: List<AbilityUi> = listOf(),
 
     ) {
     fun isLoaded(): Boolean = (id != -1)
@@ -24,8 +25,15 @@ data class PokemonDetailUi(
     fun printableId(): String = "#" + id.toString().padStart(length = 3, padChar = '0')
     fun printableWeight(): String = "${weight}Kg"
     fun printableHeight(): String = "${height}Cm"
-    fun typeColors(): List<Color> = if (types.size > 1) {
-        listOf(types.first().color.darkenBy(.4f), types.last().color.lightenBy(.25f))
+    fun typeColorsForAbilities(): List<Color> = if (types.size > 1) {
+        listOf(types.first().color.darkenBy(.7f), types.last().color.darkenBy(.7f))
+    } else {
+        val singleColor = types.first().color.darkenBy(0.8f)
+        listOf(singleColor, singleColor)
+    }
+
+    fun typeColorsForImageBackground(): List<Color> = if (types.size > 1) {
+        listOf(types.first().color.darkenBy(.7f), types.last().color.lightenBy(.1f))
     } else {
         listOf(types.first().color.darkenBy(.4f), types.first().color.lightenBy(.1f))
     }
@@ -43,6 +51,7 @@ fun PokemonDetailDto.toPokemonDetailUi() = PokemonDetailUi(
     weight = this.weight / 10,
     sprites = this.sprites.toSpritesUi(),
     types = this.types.map { type -> type.toTypeUi() },
-    stats = this.stats.toStatsUi()
+    stats = this.stats.toStatsUi(),
+    abilities = this.abilities.map { it.toAbilityUi() }
 )
 

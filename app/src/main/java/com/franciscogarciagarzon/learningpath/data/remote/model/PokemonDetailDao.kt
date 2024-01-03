@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PokemonDetailDao(
     @SerializedName("abilities")
-    val abilities: List<Ability>,
+    val abilities: List<AbilityWrapperDao>,
     @SerializedName("base_experience")
     val baseExperience: Int,
     @SerializedName("forms")
@@ -54,7 +54,8 @@ fun PokemonDetailDao.toPokemonDetailDto(): PokemonDetailDto {
         types = this.types.toDomainTypes(),
         sprites = this.sprites.toSpritesDto(),
         stats = this.stats.toStatsDto(),
-        id = this.id
+        id = this.id,
+        abilities = this.abilities.map { wrapper -> wrapper.ability.toAbilityDto() }
     )
 }
 
