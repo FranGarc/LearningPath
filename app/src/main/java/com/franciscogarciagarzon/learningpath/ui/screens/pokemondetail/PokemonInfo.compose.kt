@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.franciscogarciagarzon.learningpath.R
+import com.franciscogarciagarzon.learningpath.ui.model.AbilityUi
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
 import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel20
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
@@ -42,8 +43,8 @@ fun PokemonInfo(
     tabIndex: Int,
 ) {
     val pokemon: PokemonDetailUi = pokemonDetail
-    val typeColorsGradient = Brush.verticalGradient(
-        colors = pokemon.typeColors(),
+    val typeColorsGradientForImageBackground = Brush.verticalGradient(
+        colors = pokemon.typeColorsForImageBackground(),
         startY = 500f, endY = 800f
     )
 
@@ -54,7 +55,7 @@ fun PokemonInfo(
     ) {
         Box(
             modifier = Modifier
-                .background(typeColorsGradient)
+                .background(typeColorsGradientForImageBackground)
                 .fillMaxSize()
         ) {
             Column(modifier = Modifier.padding(top = 16.dp)) {
@@ -117,6 +118,7 @@ fun PokemonInfo(
                         RemoteImage(
 //                        imageUrl = pokemonDetail.sprites.frontDefault,
                             imageUrl = pokemon.artUrl(),
+                            fallbackUrl = "",
                             placeholderResource = R.drawable.ic_pokeball_icon,
                             errorResource = R.drawable.ic_error,
                             contentDescription = pokemonDetail.name,
@@ -149,10 +151,18 @@ fun PokemonInfo(
 @Preview(showBackground = true)
 fun PreviewPokemonInfo() {
     PokemonInfo(
-        pokemonDetail = PokemonDetailUi(id = 10249, name = "ogerpon-cornerstone-mask-que.te.cagas"),
+        pokemonDetail = PokemonDetailUi(
+            id = 10249,
+            name = "ogerpon-cornerstone-mask-que.te.cagas",
+            abilities = listOf<AbilityUi>(
+                AbilityUi(name = "compound-eyes", url = "https://pokeapi.co/api/v2/ability/132/"),
+                AbilityUi(name = "friend-guard", url = "https://pokeapi.co/api/v2/ability/132/"),
+                AbilityUi(name = "something-something", url = "https://pokeapi.co/api/v2/ability/132/"),
+            )
+        ),
         innerPadding = PaddingValues(),
         tabs = listOf("About", "Base Stats"),
-        tabIndex = 1,
+        tabIndex = 0,
         onClickedTab = {}
     )
 

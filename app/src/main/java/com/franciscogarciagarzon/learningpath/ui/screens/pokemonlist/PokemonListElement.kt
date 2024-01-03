@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import com.franciscogarciagarzon.learningpath.R
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
+import com.franciscogarciagarzon.learningpath.ui.model.fallbackSpriteUrl
+import com.franciscogarciagarzon.learningpath.ui.model.toPokemonUi
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
 
 @Composable
@@ -38,6 +40,7 @@ fun PokemonListElement(pokemon: PokemonDto, clickAction: () -> Unit) {
                 .width(IntrinsicSize.Min)
                 .fillMaxWidth(),
             imageUrl = pokemon.defaultSprite,
+            fallbackUrl = pokemon.toPokemonUi().fallbackSpriteUrl(),
             contentDescription = pokemon.name,
             errorResource = R.drawable.ic_error,
             placeholderResource = R.drawable.ic_pokeball_icon

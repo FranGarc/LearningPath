@@ -8,13 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
@@ -29,13 +30,15 @@ import com.franciscogarciagarzon.learningpath.domain.model.URL
 
 fun RemoteImage(
     modifier: Modifier = Modifier,
-    imageUrl: String,
+    imageUrl: URL,
+    fallbackUrl: URL,
     @DrawableRes placeholderResource: Int,
     @DrawableRes errorResource: Int,
     contentDescription: String,
     contentScale: ContentScale = ContentScale.Fit,
 ) {
     Log.d("RemoteImage", "url: $imageUrl")
+    Log.d("RemoteImage", "fallbackUrl: $fallbackUrl")
     if (imageUrl.endsWith("png")) {
 
         RemoteImagePng(
@@ -47,11 +50,12 @@ fun RemoteImage(
         )
 
     } else {
-        RemoteVector(
-            spriteUrl = imageUrl,
+        RemoteVectorWithFallback(
+            primaryUrl = imageUrl,
             placeholderResource = placeholderResource,
             errorResource = errorResource,
             modifier = modifier,
+            fallbackUrl = fallbackUrl,
             contentDescription = contentDescription
         )
     }
@@ -70,30 +74,36 @@ fun RemoteVectorWithFallback(
 ) {
     Log.i("RemoteVectorWithFallback", "primaryUrl: $primaryUrl ")
     Log.i("RemoteVectorWithFallback", "fallbackUrl: $fallbackUrl ")
-    val spriteUrl = remember { mutableStateOf<String>(primaryUrl) }
-    val localImagePainterUrl = remember { mutableStateOf<String?>(null) }
-    val painter = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current).data(
-            data = localImagePainterUrl.value
-                ?: primaryUrl
-        ).apply<ImageRequest.Builder>(block = fun ImageRequest.Builder.() {
-            placeholder(placeholderResource)
-        }).build()
-    )
-    val isError = painter.state is AsyncImagePainter.State.Error
 
-    LaunchedEffect(isError) {
-        Log.d("RemoteVectorWithFallback", "LaunchedEffect: $isError ")
-
-        if (isError)
-            spriteUrl.value = fallbackUrl
-
-    }
-    Log.d("RemoteVectorWithFallback", "pre Image ${painter.request.data}")
-
-    Image(
-        painter = painter,
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(primaryUrl.ifEmpty { placeholderResource })
+            .size(Size.ORIGINAL)
+            .scale(Scale.FIT)
+            .crossfade(true)
+            .placeholder(placeholderResource)
+            .error(errorResource)
+            .decoderFactory(SvgDecoder.Factory())
+            .build(),
         contentDescription = contentDescription,
+        modifier = modifier.fillMaxWidth(),
+        error = {
+            Log.e("RemoteVectorWithFallback", "error")
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(fallbackUrl.ifEmpty { placeholderResource })
+                    .size(Size.ORIGINAL)
+                    .scale(Scale.FIT)
+                    .crossfade(true)
+                    .placeholder(placeholderResource)
+                    .error(errorResource)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
+                contentDescription = contentDescription
+            )
+        },
+        alignment = Alignment.Center,
+        contentScale = ContentScale.Fit,
     )
 }
 
@@ -150,6 +160,8 @@ fun RemoteImagePng(
     contentDescription: String,
     modifier: Modifier
 ) {
+    Log.i("RemoteVectorWithFallback", "imageUrl: $imageUrl ")
+
     val painter = remember {
         mutableStateOf<AsyncImagePainter?>(null)
     }
@@ -178,6 +190,7 @@ fun RemoteImagePng(
 fun PreviewRemoteImagePng() {
     RemoteImage(
         imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png",
+        fallbackUrl = "",
         placeholderResource = R.drawable.ic_pokeball_icon,
         errorResource = R.drawable.ic_pokeball_icon,
         contentDescription = ""
@@ -188,7 +201,8 @@ fun PreviewRemoteImagePng() {
 @Composable
 fun PreviewRemoteImageSvg() {
     RemoteImage(
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
+        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/712.svg",
+        fallbackUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/712.png",
         placeholderResource = R.drawable.ic_pokeball_icon,
         errorResource = R.drawable.ic_pokeball_icon,
         contentDescription = ""

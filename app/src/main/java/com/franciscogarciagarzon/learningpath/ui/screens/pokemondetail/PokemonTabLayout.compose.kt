@@ -25,6 +25,8 @@ fun PokemonTabLayout(
     tabIndex: Int,
     pokemonDetailUi: PokemonDetailUi
 ) {
+
+
 //    val tabIndex = viewModel.tabIndex.collectAsState()
     Surface {
 

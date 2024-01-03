@@ -50,6 +50,7 @@ fun PokemonDetail(
 
             RemoteImage(
                 imageUrl = pokemonDetail.sprites.frontDefault,
+                fallbackUrl = "",
                 placeholderResource = R.drawable.ic_pokeball_icon,
                 errorResource = R.drawable.ic_error,
                 contentDescription = pokemonDetail.name,

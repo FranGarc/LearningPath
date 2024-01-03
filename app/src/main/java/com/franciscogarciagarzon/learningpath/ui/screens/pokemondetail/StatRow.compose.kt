@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,10 +34,17 @@ fun StatRow(stat: StatUi = StatUi(name = "Sp. Attack", value = 100), modifier: M
         Row(
             horizontalArrangement = Arrangement.Start, modifier = modifier.weight(0.6f), verticalAlignment = Alignment.CenterVertically
         ) {
+            val barColor = if (stat.value > 77) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.inversePrimary
+            }
             StatIndicator(
-                stat.value, modifier = Modifier
+                statValue = stat.value,
+                modifier = Modifier
                     .weight(0.8f)
-                    .padding(end = 5.dp, start = 5.dp)
+                    .padding(end = 5.dp, start = 5.dp),
+                color = barColor
             )
 
             RegularLabel(
