@@ -1,11 +1,19 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail
 
+import android.util.Log
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -19,7 +27,15 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.AbilityCompo
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 
 @Composable
-fun PokemonInfoAbout(pokemonDetailUi: PokemonDetailUi) {
+fun PokemonInfoAbout(
+    pokemonDetailUi: PokemonDetailUi,
+    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
+) {
+
+    var isSwipeToTheLeft by remember { mutableStateOf(false) }
+    val dragState = rememberDraggableState(onDelta = { delta ->
+        isSwipeToTheLeft = delta > 0
+    })
 
     val paddingContainerTop = 10.dp
     val paddingRowTop = 15.dp
@@ -33,7 +49,20 @@ fun PokemonInfoAbout(pokemonDetailUi: PokemonDetailUi) {
         colors = typeColors,
         startX = 0f, endX = 250f
     )
-    Column {
+    Column(
+        modifier = Modifier
+            .draggable(
+                state = dragState,
+                orientation = Orientation.Horizontal,
+                onDragStarted = {
+                    Log.d("PokemonInfoAbout", "onDragStarted")
+                },
+                onDragStopped = {
+                    Log.d("PokemonInfoAbout", "onDragStopped isSwipeToTheLeft: $isSwipeToTheLeft")
+                    updateTabIndexBasedOnSwipe(isSwipeToTheLeft)
+                }
+            )
+    ) {
 
 
         Row(
@@ -106,6 +135,7 @@ fun PokemonInfoAbout(pokemonDetailUi: PokemonDetailUi) {
 @Composable
 fun PokemonInfoAboutPreview() {
     PokemonInfoAbout(
+        updateTabIndexBasedOnSwipe = {},
         pokemonDetailUi = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
 
         )

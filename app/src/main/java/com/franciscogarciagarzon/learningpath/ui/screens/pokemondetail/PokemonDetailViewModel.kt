@@ -38,6 +38,16 @@ class PokemonDetailViewModel @Inject constructor(
         }
     }
 
+    fun updateTabIndexBasedOnSwipe(isSwipeToTheLeft: Boolean) {
+        Log.d("PokemonDetailViewModel", "updateTabIndexBasedOnSwipe isSwipeToTheLeft: $isSwipeToTheLeft")
+
+        _tabIndex.value = when (isSwipeToTheLeft) {
+            true -> Math.floorMod(_tabIndex.value.plus(1), tabs.size)
+            false -> Math.floorMod(_tabIndex.value.minus(1), tabs.size)
+        }
+    }
+
+
     fun updateTabIndex(i: Int) {
         Log.d("PokemonDetailViewModel", "updateTabIndex: $i")
 

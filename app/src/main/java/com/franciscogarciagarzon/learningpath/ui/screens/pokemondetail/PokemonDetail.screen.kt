@@ -28,11 +28,13 @@ fun PokemonDetail(
     val tabs = viewModel.tabs
     val tabIndex = viewModel.tabIndex.collectAsState()
     val onClickedTab: (Int) -> Unit = viewModel::updateTabIndex
+
     Screen(
         pokemonDetail = pokemonDetail,
         navigateUp = navigateUp,
         tabs = tabs,
         tabIndex = tabIndex.value,
+        updateTabIndexBasedOnSwipe = viewModel::updateTabIndexBasedOnSwipe,
         onClickedTab = onClickedTab
 
     )
@@ -46,7 +48,8 @@ fun Screen(
     navigateUp: () -> Unit = {},
     tabs: List<String>,
     tabIndex: Int,
-    onClickedTab: (Int) -> Unit
+    onClickedTab: (Int) -> Unit,
+    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
 ) {
     LearningPathTheme {
         Scaffold(topBar = {
@@ -55,13 +58,13 @@ fun Screen(
             )
         }, content = { innerPadding ->
             Log.d("PokemonDetailScreen", "Composable pokemonDetail: $pokemonDetail")
-//            PokemonDetail(pokemonDetail, innerPadding)
             if (pokemonDetail.isLoaded())
                 PokemonInfo(
                     pokemonDetail,
                     innerPadding,
                     tabs = tabs,
                     tabIndex = tabIndex,
+                    updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
                     onClickedTab = onClickedTab
                 )
         })
@@ -72,7 +75,6 @@ fun Screen(
 @Preview(name = "PIXEL", device = Devices.PIXEL, showSystemUi = true)
 @Preview(name = "PIXEL2", device = Devices.PIXEL_2, showSystemUi = true)
 @Preview(name = "PIXEL3", device = Devices.PIXEL_3, showSystemUi = true)
-//@Preview(name = "PIXEL_XL", device = Devices.NEXUS_10, showSystemUi = true)
 @Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
 fun PreviewDetail() {
@@ -81,6 +83,7 @@ fun PreviewDetail() {
         navigateUp = {},
         tabs = listOf("About", "Base Stats"),
         tabIndex = 1,
+        updateTabIndexBasedOnSwipe = {},
         onClickedTab = { }
     )
 }

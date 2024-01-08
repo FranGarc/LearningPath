@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
@@ -19,27 +18,21 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 
 @Composable
 fun PokemonTabLayout(
-//    viewModel: PokemonDetailViewModel = hiltViewModel(),
     onClick: (Int) -> Unit,
     tabs: List<String>,
     tabIndex: Int,
+    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
     pokemonDetailUi: PokemonDetailUi
 ) {
-
-
-//    val tabIndex = viewModel.tabIndex.collectAsState()
-    Surface {
-
-    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
+
     ) {
         TabRow(
             selectedTabIndex = tabIndex,
 
             ) {
-//            viewModel.tabs.forEachIndexed { index, title ->
             tabs.forEachIndexed { index, title ->
                 Log.d("PokemonTabLayout", "title: $title || index: $index")
                 Tab(
@@ -47,28 +40,22 @@ fun PokemonTabLayout(
                     text = { RegularLabel(title) },
                     selected = tabIndex == index,
                     onClick = { onClick(index) },
-//                    onClick = { viewModel.updateTabIndex(index) },
-//                    icon = {
-//                        when (index) {
-//                            0 -> Icon(imageVector = Icons.Default.Home, contentDescription = null)
-//                            1 -> Icon(imageVector = Icons.Default.Info, contentDescription = null)
-//                            2 -> Icon(imageVector = Icons.Default.Settings, contentDescription = null)
-//                        }
-//                    }
                 )
             }
         }
 
         when (tabIndex) {
-            0 -> PokemonInfoAbout(pokemonDetailUi = pokemonDetailUi)
-            1 -> PokemonInfoStats(stats = pokemonDetailUi.stats)
+            0 -> PokemonInfoAbout(
+                pokemonDetailUi = pokemonDetailUi,
+                updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
+            )
+
+            1 -> PokemonInfoStats(
+                stats = pokemonDetailUi.stats,
+                updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
+            )
         }
     }
-
-}
-
-@Composable
-fun CustomTabIndicator(selectedTabIndex: Int) {
 
 }
 
@@ -79,6 +66,7 @@ fun TabLayoutPreview() {
         tabs = listOf("About", "Base Stats"),
         pokemonDetailUi = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
         tabIndex = 0,
-        onClick = {}
+        onClick = {},
+        updateTabIndexBasedOnSwipe = {}
     )
 }

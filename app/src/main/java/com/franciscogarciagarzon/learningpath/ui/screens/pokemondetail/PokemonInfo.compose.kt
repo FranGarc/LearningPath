@@ -1,6 +1,5 @@
 package com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail
 
-//import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi.toPokemonDetailUi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -41,6 +40,7 @@ fun PokemonInfo(
     onClickedTab: (Int) -> Unit,
     tabs: List<String>,
     tabIndex: Int,
+    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
 ) {
     val pokemon: PokemonDetailUi = pokemonDetail
     val typeColorsGradientForImageBackground = Brush.verticalGradient(
@@ -116,7 +116,6 @@ fun PokemonInfo(
                     }
                     Box {
                         RemoteImage(
-//                        imageUrl = pokemonDetail.sprites.frontDefault,
                             imageUrl = pokemon.artUrl(),
                             fallbackUrl = "",
                             placeholderResource = R.drawable.ic_pokeball_icon,
@@ -131,6 +130,7 @@ fun PokemonInfo(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+
                         .background(color = MaterialTheme.colorScheme.background)
                         .verticalScroll(state = rememberScrollState())
                 ) {
@@ -138,6 +138,7 @@ fun PokemonInfo(
                         onClick = onClickedTab,
                         tabs = tabs,
                         tabIndex = tabIndex,
+                        updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
                         pokemonDetailUi = pokemonDetail
                     )
                 }
@@ -163,7 +164,8 @@ fun PreviewPokemonInfo() {
         innerPadding = PaddingValues(),
         tabs = listOf("About", "Base Stats"),
         tabIndex = 0,
-        onClickedTab = {}
+        onClickedTab = {},
+        updateTabIndexBasedOnSwipe = {},
     )
 
 }
