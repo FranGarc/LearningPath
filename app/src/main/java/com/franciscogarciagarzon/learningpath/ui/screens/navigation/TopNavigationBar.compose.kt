@@ -14,8 +14,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 
@@ -47,7 +49,20 @@ fun TopNavBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = upNavigation) {
+            val lifecycleOwner = LocalLifecycleOwner.current
+            IconButton(
+                onClick = {
+                    val currentState = lifecycleOwner.lifecycle.currentState
+                    // fix for the bug with doubletapping leading to blank screen
+                    // when the lifecycle current state is RESUMED, it's not navigating
+                    // so we ignore any click events when we've started navigating to another screen
+                    if (currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        upNavigation()
+                    }
+
+                }
+
+            ) {
                 Icon(Icons.Default.ArrowBack, "Back")
             }
         },
