@@ -11,6 +11,7 @@ import com.franciscogarciagarzon.learningpath.domain.model.AbilityDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
+import com.franciscogarciagarzon.learningpath.domain.model.Result
 import com.franciscogarciagarzon.learningpath.domain.model.SpritesDto
 import com.franciscogarciagarzon.learningpath.domain.model.StatsDto
 import com.franciscogarciagarzon.learningpath.domain.model.toStatDto
@@ -101,13 +102,13 @@ class MockDataSource : DatasourceAdapter {
         )
     })
 
-    override suspend fun getPokemonList(): Flow<PokemonListDto> = flow {
+    override suspend fun getPokemonList(): Flow<Result<PokemonListDto>> = flow {
         delay(1000)
-        emit(PokemonListDto(emptyList()))
+        emit(Result.Success(PokemonListDto(emptyList())))
     }
 
-    override suspend fun getPokemonDetail(id: String): Flow<PokemonDetailDto> = flow {
+    override suspend fun getPokemonDetail(id: String): Flow<Result<PokemonDetailDto>> = flow {
         delay(1000)
-        emit(PokemonDetailDto())
+        emit(Result.Success(PokemonDetailDto()))
     }
 }

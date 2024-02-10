@@ -12,8 +12,12 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
+import com.franciscogarciagarzon.learningpath.ui.model.StateWrapper
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonDetailUi
+import com.franciscogarciagarzon.learningpath.ui.screens.components.ErrorDialog
+import com.franciscogarciagarzon.learningpath.ui.screens.components.LoadingIndicator
 import com.franciscogarciagarzon.learningpath.ui.screens.navigation.TopNavBar
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
 
@@ -23,21 +27,54 @@ fun PokemonDetail(
     id: String, navigateUp: () -> Unit = {}, viewModel: PokemonDetailViewModel = hiltViewModel()
 ) {
 
-    val pokemonDetail by viewModel.uiState.collectAsState()
+    val pokemonDetailStateFlow by viewModel.uiState.collectAsState()
+    lateinit var pokemonDetail: PokemonDetailUi
     viewModel.getPokemonDetail(pokemonId = id)
+
     val tabs = viewModel.tabs
     val tabIndex = viewModel.tabIndex.collectAsState()
     val onClickedTab: (Int) -> Unit = viewModel::updateTabIndex
 
-    Screen(
-        pokemonDetail = pokemonDetail,
-        navigateUp = navigateUp,
-        tabs = tabs,
-        tabIndex = tabIndex.value,
-        updateTabIndexBasedOnSwipe = viewModel::updateTabIndexBasedOnSwipe,
-        onClickedTab = onClickedTab
 
-    )
+    when (pokemonDetailStateFlow) {
+        is StateWrapper.Success -> {
+            pokemonDetail = (pokemonDetailStateFlow as StateWrapper.Success<PokemonDetailDto>).value.toPokemonDetailUi()
+            Screen(
+                pokemonDetail = pokemonDetail,
+                navigateUp = navigateUp,
+                tabs = tabs,
+                tabIndex = tabIndex.value,
+                updateTabIndexBasedOnSwipe = viewModel::updateTabIndexBasedOnSwipe,
+                onClickedTab = onClickedTab
+            )
+        }
+
+        is StateWrapper.Error -> {
+            val errorMessage = (pokemonDetailStateFlow as StateWrapper.Error).message
+            Log.w("PokemonDetail.screen", "state: Error message $errorMessage")
+            ErrorDialog(message = errorMessage, onDismissRequest = viewModel::resetUiStatae, onRetry = { viewModel.getPokemonDetail(id) })
+
+        }
+
+        is StateWrapper.Loading -> {
+            Log.d("PokemonDetail.screen", "state: Loading")
+            LoadingIndicator()
+        }
+
+        is StateWrapper.Nothing -> {
+            Log.d("PokemonDetail.screen", "state: Nothing")
+            Screen(
+                PokemonDetailUi(),
+                navigateUp = navigateUp,
+                tabs = tabs,
+                tabIndex = tabIndex.value,
+                updateTabIndexBasedOnSwipe = viewModel::updateTabIndexBasedOnSwipe,
+                onClickedTab = onClickedTab
+            )
+        }
+
+    }
+
 
 }
 
