@@ -1,6 +1,7 @@
 package com.franciscogarciagarzon.learningpath.data.remote.model
 
 
+import com.franciscogarciagarzon.learningpath.domain.model.DataModelNotCompatibleWithDomainModelException
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
 import com.franciscogarciagarzon.learningpath.domain.model.StatDto
 import com.franciscogarciagarzon.learningpath.domain.model.StatsDto
@@ -46,17 +47,22 @@ data class PokemonDetailDao(
 )
 
 fun PokemonDetailDao.toPokemonDetailDto(): PokemonDetailDto {
-    return PokemonDetailDto(
-        baseExperience = this.baseExperience,
-        height = this.height,
-        name = this.name,
-        weight = this.weight,
-        types = this.types.toDomainTypes(),
-        sprites = this.sprites.toSpritesDto(),
-        stats = this.stats.toStatsDto(),
-        id = this.id,
-        abilities = this.abilities.map { wrapper -> wrapper.ability.toAbilityDto() }
-    )
+    try {
+        return PokemonDetailDto(
+            baseExperience = this.baseExperience,
+            height = this.height,
+            name = this.name,
+            weight = this.weight,
+            types = this.types.toDomainTypes(),
+            sprites = this.sprites.toSpritesDto(),
+            stats = this.stats.toStatsDto(),
+            id = this.id,
+            abilities = this.abilities.map { wrapper -> wrapper.ability.toAbilityDto() }
+        )
+    } catch (e: Exception) {
+        e.printStackTrace()
+        throw DataModelNotCompatibleWithDomainModelException(e.message)
+    }
 }
 
 

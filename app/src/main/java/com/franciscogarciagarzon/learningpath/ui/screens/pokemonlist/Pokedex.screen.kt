@@ -60,7 +60,11 @@ fun PokedexList(
             is StateWrapper.Error -> {
                 val errorMessage = (pokemonListStateFlow as StateWrapper.Error).message
                 Log.w("PokemonList.screen", "state: Error message $errorMessage")
-                ErrorDialog(message = errorMessage, onDismissRequest = viewModel::resetUiStatae, onRetry = { viewModel.getPokemonList() })
+                ErrorDialog(
+                    message = errorMessage,
+                    onDismissRequest = viewModel::resetUiState,
+                    onRetry = { viewModel.getPokemonList() }
+                )
 
             }
 
@@ -98,7 +102,9 @@ fun Screen(
             content = { innerPadding ->
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     PokedexGrid(
-                        pokemonListData = pokemonListData, innerPadding = innerPadding, showPokemonDetail = showPokemonDetail
+                        pokemonListData = pokemonListData,
+                        innerPadding = innerPadding,
+                        showPokemonDetail = showPokemonDetail
                     )
                 }
             },

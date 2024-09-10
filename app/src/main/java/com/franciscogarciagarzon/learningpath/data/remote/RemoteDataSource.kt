@@ -19,10 +19,16 @@ class RemoteDataSource @Inject constructor(private val pokemonService: PokemonSe
         networkCallResultFlow.collect { result ->
             dtoResult =
                 when (result) {
-                    is Result.Success -> Result.Success(result.value.toPokemonListDto())
+                    is Result.Success -> {
+                        try {
+                            Result.Success(result.value.toPokemonListDto())
+                        } catch (e: Exception) {
+                            Result.Failure(e.message, e)
+                        }
+                    }
+
                     is Result.Failure -> Result.Failure(result.message, result.throwable)
                 }
-
         }
         return flow<Result<PokemonListDto>> { emit(dtoResult) }
     }
@@ -34,7 +40,14 @@ class RemoteDataSource @Inject constructor(private val pokemonService: PokemonSe
         networkCallResultFlow.collect { result ->
             dtoResult =
                 when (result) {
-                    is Result.Success -> Result.Success(result.value.toPokemonDetailDto())
+                    is Result.Success -> {
+                        try {
+                            Result.Success(result.value.toPokemonDetailDto())
+                        } catch (e: Exception) {
+                            Result.Failure(e.message, e)
+                        }
+                    }
+
                     is Result.Failure -> Result.Failure(result.message, result.throwable)
                 }
         }

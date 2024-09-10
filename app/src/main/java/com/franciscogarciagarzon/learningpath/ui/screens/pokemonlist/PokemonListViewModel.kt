@@ -28,7 +28,7 @@ class PokemonListViewModel @Inject constructor(
         getPokemonList()
     }
 
-    fun resetUiStatae() {
+    fun resetUiState() {
         _uiState.value = StateWrapper.Nothing
     }
 
@@ -39,8 +39,7 @@ class PokemonListViewModel @Inject constructor(
 
             Log.d("PokemonListViewModel", "getPokemonList launched")
             getListUseCase().flowOn(Dispatchers.IO).catch { e ->
-                Log.e("PokemonListViewModel", "exception: ${e.message}", e)
-//            }.collect { pokemonList ->
+                Log.e("PokemonListViewModel", "exception: ${e.javaClass} || message: ${e.message}", e)
             }.collect { result ->
                 when (result) {
                     is Result.Success -> _uiState.value = StateWrapper.Success(value = result.value)

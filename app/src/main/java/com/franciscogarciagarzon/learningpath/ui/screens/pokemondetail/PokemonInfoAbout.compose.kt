@@ -29,11 +29,12 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 @Composable
 fun PokemonInfoAbout(
     pokemonDetailUi: PokemonDetailUi,
-    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
+    updateTabIndexBasedOnSwipe: (PokemonDetailUserEvent) -> Unit,
 ) {
 
     var isSwipeToTheLeft by remember { mutableStateOf(false) }
     val dragState = rememberDraggableState(onDelta = { delta ->
+        Log.d("PokemonInfoAbout", "dragState delta: $delta")
         isSwipeToTheLeft = delta > 0
     })
 
@@ -59,7 +60,7 @@ fun PokemonInfoAbout(
                 },
                 onDragStopped = {
                     Log.d("PokemonInfoAbout", "onDragStopped isSwipeToTheLeft: $isSwipeToTheLeft")
-                    updateTabIndexBasedOnSwipe(isSwipeToTheLeft)
+                    updateTabIndexBasedOnSwipe(PokemonDetailUserEvent.OnSwipedTab(isSwipeToTheLeft))
                 }
             )
     ) {
