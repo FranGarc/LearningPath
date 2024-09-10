@@ -18,15 +18,14 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
 
 @Composable
 fun PokemonTabLayout(
-    onClick: (Int) -> Unit,
+    onClick: (PokemonDetailUserEvent) -> Unit,
     tabs: List<String>,
     tabIndex: Int,
-    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
+    updateTabIndexBasedOnSwipe: (PokemonDetailUserEvent) -> Unit,
     pokemonDetailUi: PokemonDetailUi
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
 
     ) {
         TabRow(
@@ -39,7 +38,8 @@ fun PokemonTabLayout(
                     modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
                     text = { RegularLabel(title) },
                     selected = tabIndex == index,
-                    onClick = { onClick(index) },
+                    onClick = { onClick(PokemonDetailUserEvent.OnClickedTab(index)) },
+//                    onClick = { onClick(index) },
                 )
             }
         }
@@ -62,11 +62,5 @@ fun PokemonTabLayout(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TabLayoutPreview() {
-    PokemonTabLayout(
-        tabs = listOf("About", "Base Stats"),
-        pokemonDetailUi = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
-        tabIndex = 0,
-        onClick = {},
-        updateTabIndexBasedOnSwipe = {}
-    )
+    PokemonTabLayout(tabs = listOf("About", "Base Stats"), pokemonDetailUi = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(), tabIndex = 0, onClick = {}, updateTabIndexBasedOnSwipe = {})
 }

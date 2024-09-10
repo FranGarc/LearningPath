@@ -37,10 +37,10 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.TypeComponen
 fun PokemonInfo(
     pokemonDetail: PokemonDetailUi,
     innerPadding: PaddingValues,
-    onClickedTab: (Int) -> Unit,
+    onClickedTab: (PokemonDetailUserEvent) -> Unit,
     tabs: List<String>,
     tabIndex: Int,
-    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
+    updateTabIndexBasedOnSwipe: (PokemonDetailUserEvent) -> Unit,
 ) {
     val pokemon: PokemonDetailUi = pokemonDetail
     val typeColorsGradientForImageBackground = Brush.verticalGradient(

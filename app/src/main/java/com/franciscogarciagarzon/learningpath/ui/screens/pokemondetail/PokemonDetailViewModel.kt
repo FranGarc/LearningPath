@@ -49,6 +49,13 @@ class PokemonDetailViewModel @Inject constructor(
         }
     }
 
+    fun onEvent(userEvent: PokemonDetailUserEvent) {
+        when (userEvent) {
+            is PokemonDetailUserEvent.OnClickedTab -> updateTabIndex(userEvent.clickedIndex)
+            is PokemonDetailUserEvent.OnSwipedTab -> updateTabIndexBasedOnSwipe(userEvent.isSwipeToTheLeft)
+        }
+    }
+
     fun resetUiStatae() {
         _uiState.value = StateWrapper.Nothing
     }
@@ -57,8 +64,13 @@ class PokemonDetailViewModel @Inject constructor(
         Log.d("PokemonDetailViewModel", "updateTabIndexBasedOnSwipe isSwipeToTheLeft: $isSwipeToTheLeft")
 
         _tabIndex.value = when (isSwipeToTheLeft) {
-            true -> Math.floorMod(_tabIndex.value.plus(1), tabs.size)
-            false -> Math.floorMod(_tabIndex.value.minus(1), tabs.size)
+            true -> {
+                Math.floorMod(_tabIndex.value.plus(1), tabs.size)
+            }
+
+            false -> {
+                Math.floorMod(_tabIndex.value.minus(1), tabs.size)
+            }
         }
     }
 
@@ -71,4 +83,9 @@ class PokemonDetailViewModel @Inject constructor(
         }
     }
 
+}
+
+sealed class PokemonDetailUserEvent {
+    class OnClickedTab(val clickedIndex: Int) : PokemonDetailUserEvent()
+    class OnSwipedTab(val isSwipeToTheLeft: Boolean) : PokemonDetailUserEvent()
 }

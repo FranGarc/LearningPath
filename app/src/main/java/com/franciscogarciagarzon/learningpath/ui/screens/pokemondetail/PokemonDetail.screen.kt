@@ -41,7 +41,8 @@ fun PokemonDetail(
 
     val tabs = viewModel.tabs
     val tabIndex = viewModel.tabIndex.collectAsState()
-    val onClickedTab: (Int) -> Unit = viewModel::updateTabIndex
+    val onClickedTab: (PokemonDetailUserEvent) -> Unit = viewModel::onEvent
+//    val onClickedTab: (Int) -> Unit = viewModel::updateTabIndex
 
 
     when (pokemonDetailStateFlow) {
@@ -52,8 +53,7 @@ fun PokemonDetail(
                 navigateUp = navigateUp,
                 tabs = tabs,
                 tabIndex = tabIndex.value,
-                updateTabIndexBasedOnSwipe = viewModel::updateTabIndexBasedOnSwipe,
-                onClickedTab = onClickedTab
+                updateTabIndexBasedOnSwipe = viewModel::onEvent, onClickedTab = onClickedTab
             )
         }
 
@@ -72,11 +72,11 @@ fun PokemonDetail(
         is StateWrapper.Nothing -> {
             Log.d("PokemonDetail.screen", "state: Nothing")
             Screen(
-                PokemonDetailUi(),
+                pokemonDetail = PokemonDetailUi(),
                 navigateUp = navigateUp,
                 tabs = tabs,
                 tabIndex = tabIndex.value,
-                updateTabIndexBasedOnSwipe = viewModel::updateTabIndexBasedOnSwipe,
+                updateTabIndexBasedOnSwipe = viewModel::onEvent,
                 onClickedTab = onClickedTab
             )
         }
@@ -93,8 +93,8 @@ fun Screen(
     navigateUp: () -> Unit = {},
     tabs: List<String>,
     tabIndex: Int,
-    onClickedTab: (Int) -> Unit,
-    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
+    onClickedTab: (PokemonDetailUserEvent) -> Unit,
+    updateTabIndexBasedOnSwipe: (PokemonDetailUserEvent) -> Unit,
 ) {
     LearningPathTheme {
         Scaffold(topBar = {
@@ -103,15 +103,11 @@ fun Screen(
             )
         }, content = { innerPadding ->
             Log.d("PokemonDetailScreen", "Composable pokemonDetail: $pokemonDetail")
-            if (pokemonDetail.isLoaded())
-                PokemonInfo(
-                    pokemonDetail,
-                    innerPadding,
-                    tabs = tabs,
-                    tabIndex = tabIndex,
-                    updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
-                    onClickedTab = onClickedTab
-                )
+            if (pokemonDetail.isLoaded()) PokemonInfo(
+                pokemonDetail, innerPadding, tabs = tabs, tabIndex = tabIndex,
+                updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
+                onClickedTab = onClickedTab
+            )
         })
     }
 }
@@ -123,12 +119,5 @@ fun Screen(
 @Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
 fun PreviewDetail() {
-    Screen(
-        pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
-        navigateUp = {},
-        tabs = listOf("About", "Base Stats"),
-        tabIndex = 1,
-        updateTabIndexBasedOnSwipe = {},
-        onClickedTab = { }
-    )
+    Screen(pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(), navigateUp = {}, tabs = listOf("About", "Base Stats"), tabIndex = 1, updateTabIndexBasedOnSwipe = {}, onClickedTab = { })
 }

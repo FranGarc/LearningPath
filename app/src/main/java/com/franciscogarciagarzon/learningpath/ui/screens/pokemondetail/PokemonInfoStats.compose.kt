@@ -23,7 +23,7 @@ import com.franciscogarciagarzon.learningpath.ui.model.StatsUi
 @Composable
 fun PokemonInfoStats(
     stats: StatsUi,
-    updateTabIndexBasedOnSwipe: (Boolean) -> Unit,
+    updateTabIndexBasedOnSwipe: (PokemonDetailUserEvent) -> Unit,
 ) {
     var isSwipeToTheLeft by remember { mutableStateOf(false) }
     val dragState = rememberDraggableState(onDelta = { delta ->
@@ -42,7 +42,7 @@ fun PokemonInfoStats(
                 },
                 onDragStopped = {
                     Log.d("PokemonInfoStats", "onDragStopped  isSwipeToTheLeft: $isSwipeToTheLeft")
-                    updateTabIndexBasedOnSwipe(isSwipeToTheLeft)
+                    updateTabIndexBasedOnSwipe(PokemonDetailUserEvent.OnSwipedTab(isSwipeToTheLeft))
                 }
             )
             .padding(5.dp),

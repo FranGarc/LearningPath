@@ -8,7 +8,13 @@ data class PokemonListDto(
 
 
 fun PokemonListDao.toPokemonListDto(): PokemonListDto {
-    return PokemonListDto(pokemons = this.results.map { pokemonDao -> pokemonDao.toPokemonDto() })
+    try {
+        return PokemonListDto(pokemons = this.results.map { pokemonDao -> pokemonDao.toPokemonDto() })
+    } catch (e: Exception) {
+        e.printStackTrace()
+        throw DataModelNotCompatibleWithDomainModelException(e.message)
+    }
+
 }
 
 
