@@ -1,6 +1,6 @@
 package com.franciscogarciagarzon.learningpath.domain.model
 
-data class DreamWorldDto(
+data class OfficialArtwork(
     val frontDefault: URL = "",
-    val frontFemale: URL = "",
+    val frontShiny: URL = "",
 )

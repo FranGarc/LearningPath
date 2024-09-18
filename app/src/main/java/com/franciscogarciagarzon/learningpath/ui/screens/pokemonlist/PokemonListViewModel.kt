@@ -3,7 +3,7 @@ package com.franciscogarciagarzon.learningpath.ui.screens.pokemonlist
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonList
 import com.franciscogarciagarzon.learningpath.domain.model.Result
 import com.franciscogarciagarzon.learningpath.domain.usecase.PokemonListUseCase
 import com.franciscogarciagarzon.learningpath.ui.model.StateWrapper
@@ -21,7 +21,7 @@ class PokemonListViewModel @Inject constructor(
     private val getListUseCase: PokemonListUseCase
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<StateWrapper<PokemonListDto>> = MutableStateFlow(StateWrapper.Nothing)
+    private val _uiState: MutableStateFlow<StateWrapper<PokemonList>> = MutableStateFlow(StateWrapper.Nothing)
     val uiState = _uiState
 
     init {

@@ -20,13 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.franciscogarciagarzon.learningpath.R
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
+import com.franciscogarciagarzon.learningpath.domain.model.Pokemon
 import com.franciscogarciagarzon.learningpath.ui.model.fallbackSpriteUrl
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonUi
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
 
 @Composable
-fun PokemonListElement(pokemon: PokemonDto, clickAction: () -> Unit) {
+fun PokemonListElement(pokemon: Pokemon, clickAction: () -> Unit) {
     Row(
         modifier = Modifier
             .height(120.dp)
@@ -60,7 +60,8 @@ fun PokemonListElement(pokemon: PokemonDto, clickAction: () -> Unit) {
 @Composable
 fun ListElementPreview() {
     PokemonListElement(
-        pokemon = MockDataSource().getPokemonListDto().pokemons.first(),
+        pokemon = MockDataSource().
+        getMockPokemonList().pokemons.first(),
         clickAction = {}
     )
 }

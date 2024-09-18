@@ -3,7 +3,7 @@ package com.franciscogarciagarzon.learningpath.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonListDao(
+data class PokemonListDto(
     @SerializedName("count")
     val count: Int,
     @SerializedName("next")
@@ -11,5 +11,5 @@ data class PokemonListDao(
     @SerializedName("previous")
     val previous: String?,
     @SerializedName("results")
-    val results: List<PokemonDao>
+    val results: List<PokemonDto>
 )

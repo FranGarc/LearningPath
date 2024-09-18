@@ -1,17 +1,20 @@
 package com.franciscogarciagarzon.learningpath.data.remote.model
 
 
+import android.util.Log
 import com.franciscogarciagarzon.learningpath.domain.model.DataModelNotCompatibleWithDomainModelException
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
-import com.franciscogarciagarzon.learningpath.domain.model.StatDto
-import com.franciscogarciagarzon.learningpath.domain.model.StatsDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetail
+import com.franciscogarciagarzon.learningpath.domain.model.Stat
+import com.franciscogarciagarzon.learningpath.domain.model.Stats
 import com.google.gson.annotations.SerializedName
 
-data class PokemonDetailDao(
+data class PokemonDetailDto(
     @SerializedName("abilities")
-    val abilities: List<AbilityWrapperDao>,
+    val abilities: List<AbilityWrapperDto>,
     @SerializedName("base_experience")
     val baseExperience: Int,
+    @SerializedName("cries")
+    val cries: Cries,
     @SerializedName("forms")
     val forms: List<Form>,
     @SerializedName("game_indices")
@@ -19,7 +22,7 @@ data class PokemonDetailDao(
     @SerializedName("height")
     val height: Int,
     @SerializedName("held_items")
-    val heldItems: List<HeldItem>,
+    val heldItems: List<Any?>,
     @SerializedName("id")
     val id: Int,
     @SerializedName("is_default")
@@ -32,30 +35,33 @@ data class PokemonDetailDao(
     val name: String,
     @SerializedName("order")
     val order: Int,
+    @SerializedName("past_abilities")
+    val pastAbilities: List<Any?>,
     @SerializedName("past_types")
-    val pastTypes: List<Any>,
+    val pastTypes: List<Any?>,
     @SerializedName("species")
     val species: Species,
     @SerializedName("sprites")
-    val sprites: SpritesDao,
+    val sprites: SpritesDto,
     @SerializedName("stats")
-    val stats: List<ExternalStatDao>,
+    val stats: List<StatWrapperDto>,
     @SerializedName("types")
-    val types: List<TypeDao>,
+    val types: List<TypeDto>,
     @SerializedName("weight")
     val weight: Int
 )
 
-fun PokemonDetailDao.toPokemonDetailDto(): PokemonDetailDto {
+fun PokemonDetailDto.toPokemonDetail(): PokemonDetail {
     try {
-        return PokemonDetailDto(
+        Log.d("PokemonDetailDto", "sprites: " + this.sprites)
+        return PokemonDetail(
             baseExperience = this.baseExperience,
             height = this.height,
             name = this.name,
             weight = this.weight,
             types = this.types.toDomainTypes(),
-            sprites = this.sprites.toSpritesDto(),
-            stats = this.stats.toStatsDto(),
+            sprites = this.sprites.toSprites(),
+            stats = this.stats.toStats(),
             id = this.id,
             abilities = this.abilities.map { wrapper -> wrapper.ability.toAbilityDto() }
         )
@@ -66,26 +72,26 @@ fun PokemonDetailDao.toPokemonDetailDto(): PokemonDetailDto {
 }
 
 
-fun List<ExternalStatDao>.toStatsDto(): StatsDto {
-    var attack: StatDto = StatDto()
-    var defense: StatDto = StatDto()
-    var hp: StatDto = StatDto()
-    var specialAttack: StatDto = StatDto()
-    var specialDefense: StatDto = StatDto()
-    var speed: StatDto = StatDto()
+fun List<StatWrapperDto>.toStats(): Stats {
+    var attack: Stat = Stat()
+    var defense: Stat = Stat()
+    var hp: Stat = Stat()
+    var specialAttack: Stat = Stat()
+    var specialDefense: Stat = Stat()
+    var speed: Stat = Stat()
 
     for (stat in this) {
         when (stat.stat.name) {
-            "attack" -> attack = StatDto(name = stat.stat.name, value = stat.baseStat)
-            "defense" -> defense = StatDto(name = stat.stat.name, value = stat.baseStat)
-            "hp" -> hp = StatDto(name = stat.stat.name, value = stat.baseStat)
-            "special-attack" -> specialAttack = StatDto(name = "Sp. Attack", value = stat.baseStat)
-            "special-defense" -> specialDefense = StatDto(name = "Sp. Defense", value = stat.baseStat)
-            "speed" -> speed = StatDto(name = stat.stat.name, value = stat.baseStat)
+            "attack" -> attack = Stat(name = stat.stat.name, value = stat.baseStat)
+            "defense" -> defense = Stat(name = stat.stat.name, value = stat.baseStat)
+            "hp" -> hp = Stat(name = stat.stat.name, value = stat.baseStat)
+            "special-attack" -> specialAttack = Stat(name = "Sp. Attack", value = stat.baseStat)
+            "special-defense" -> specialDefense = Stat(name = "Sp. Defense", value = stat.baseStat)
+            "speed" -> speed = Stat(name = stat.stat.name, value = stat.baseStat)
         }
     }
 
-    return StatsDto(
+    return Stats(
         attack = attack,
         defense = defense,
         hp = hp,

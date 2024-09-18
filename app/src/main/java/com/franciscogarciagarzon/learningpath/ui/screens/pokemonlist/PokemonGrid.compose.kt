@@ -46,7 +46,7 @@ fun PokedexGrid(
 fun PokemonList1Preview() {
     LearningPathTheme {
         PokedexGrid(
-            pokemonListData = MockDataSource().getPokemonListDto().toPokemonListUi(),
+            pokemonListData = MockDataSource().getMockPokemonList().toPokemonListUi(),
             innerPadding = PaddingValues(1.dp),
             showPokemonDetail = {}
 

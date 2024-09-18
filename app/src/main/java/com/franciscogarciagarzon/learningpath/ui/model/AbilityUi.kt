@@ -1,6 +1,6 @@
 package com.franciscogarciagarzon.learningpath.ui.model
 
-import com.franciscogarciagarzon.learningpath.domain.model.AbilityDto
+import com.franciscogarciagarzon.learningpath.domain.model.Ability
 import com.franciscogarciagarzon.learningpath.domain.model.URL
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
 
@@ -13,7 +13,7 @@ data class AbilityUi(
     }
 }
 
-fun AbilityDto.toAbilityUi() = AbilityUi(
+fun Ability.toAbilityUi() = AbilityUi(
     name = this.name,
     url = this.abilityUrl
 )

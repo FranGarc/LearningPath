@@ -137,7 +137,7 @@ fun PokemonInfoAbout(
 fun PokemonInfoAboutPreview() {
     PokemonInfoAbout(
         updateTabIndexBasedOnSwipe = {},
-        pokemonDetailUi = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(),
+        pokemonDetailUi = MockDataSource().getPokemonDetail().toPokemonDetailUi(),
 
         )
 }

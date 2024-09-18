@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonList
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonListUi
 import com.franciscogarciagarzon.learningpath.ui.model.StateWrapper
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonListUi
@@ -48,7 +48,7 @@ fun PokedexList(
         when (pokemonListStateFlow) {
             is StateWrapper.Success -> {
                 Log.d("PokemonList.screen", "state: Success")
-                pokemonList = (pokemonListStateFlow as StateWrapper.Success<PokemonListDto>).value.toPokemonListUi()
+                pokemonList = (pokemonListStateFlow as StateWrapper.Success<PokemonList>).value.toPokemonListUi()
                 Screen(
                     showPokemonDetail,
                     homeNavigation,
@@ -125,6 +125,6 @@ fun Screen(
 @Composable
 fun PokemonListPreview() {
     LearningPathTheme {
-        Screen(pokemonListData = MockDataSource().getPokemonListDto().toPokemonListUi())
+        Screen(pokemonListData = MockDataSource().getMockPokemonList().toPokemonListUi())
     }
 }

@@ -1,7 +1,7 @@
 package com.franciscogarciagarzon.learningpath.ui.model
 
-import com.franciscogarciagarzon.learningpath.domain.model.StatDto
-import com.franciscogarciagarzon.learningpath.domain.model.StatsDto
+import com.franciscogarciagarzon.learningpath.domain.model.Stat
+import com.franciscogarciagarzon.learningpath.domain.model.Stats
 
 data class StatsUi(
     val attack: StatUi = StatUi(),
@@ -12,7 +12,7 @@ data class StatsUi(
     val speed: StatUi = StatUi(),
 )
 
-fun StatsDto.toStatsUi() = StatsUi(
+fun Stats.toStatsUi() = StatsUi(
     attack = this.attack.toStatUi(),
     defense = this.defense.toStatUi(),
     hp = this.hp.toStatUi(),
@@ -21,7 +21,7 @@ fun StatsDto.toStatsUi() = StatsUi(
     specialDefense = this.specialDefense.toStatUi(),
 )
 
-fun StatDto.toStatUi() = StatUi(
+fun Stat.toStatUi() = StatUi(
     name = this.name,
     value = this.value
 )

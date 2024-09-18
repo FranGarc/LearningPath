@@ -1,6 +1,6 @@
 package com.franciscogarciagarzon.learningpath.domain.model
 
-data class AbilityDto(
+data class Ability(
     val name: String = "",
     val abilityUrl: URL = ""
 )

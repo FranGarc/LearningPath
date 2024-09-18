@@ -1,6 +1,6 @@
 package com.franciscogarciagarzon.learningpath.domain.model
 
-data class SpritesDto(
+data class Sprites(
     val backDefault: URL = "",
     val backFemale: URL = "",
     val backShiny: URL = "",
@@ -9,7 +9,7 @@ data class SpritesDto(
     val frontFemale: URL = "",
     val frontShiny: URL = "",
     val frontShinyFemale: URL = "",
-    val other: OtherDto = OtherDto(),
+    val other: Other = Other(),
 
     // versions
 )

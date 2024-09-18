@@ -1,16 +1,17 @@
 package com.franciscogarciagarzon.learningpath.data.remote
 
 import android.util.Log
-import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonDetailDao
-import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonListDao
+import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonListDto
 import com.franciscogarciagarzon.learningpath.domain.model.Result
+import com.google.gson.JsonSyntaxException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
 class PokemonServiceImpl @Inject constructor(private val pokeApi: PokeApi) : PokemonService {
-    override fun getPokemonList(): Flow<Result<PokemonListDao>> {
+    override fun getPokemonList(): Flow<Result<PokemonListDto>> {
         val call = pokeApi.getPokemonList()
         val response = try {
             val execution = call.execute()
@@ -36,7 +37,7 @@ class PokemonServiceImpl @Inject constructor(private val pokeApi: PokeApi) : Pok
         }
     }
 
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<PokemonDetailDao>> {
+    override fun getPokemonDetail(pokemonName: String): Flow<Result<PokemonDetailDto>> {
         val call = pokeApi.getPokemonDetail(pokemonName)
         val response = try {
             val execution = call.execute()
@@ -45,6 +46,8 @@ class PokemonServiceImpl @Inject constructor(private val pokeApi: PokeApi) : Pok
                 if (body == null) {
                     Result.Failure("Null Response")
                 } else {
+                    Log.d("PokemonServiceImpl", "getPokemonDetail() response: ${body}")
+
                     Result.Success(body)
                 }
             } else {
@@ -55,6 +58,9 @@ class PokemonServiceImpl @Inject constructor(private val pokeApi: PokeApi) : Pok
 
         } catch (e: IOException) {
             Log.e("PokemonServiceImpl", "getPokemonDetail() exception: ${e.message}")
+            Result.Failure(e.message, e)
+        }catch (e: JsonSyntaxException){
+            Log.e("PokemonServiceImpl", "getPokemonDetail() JsonSyntaxException: ${e.message}")
             Result.Failure(e.message, e)
         }
         return flow {

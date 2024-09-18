@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
 import com.franciscogarciagarzon.learningpath.ui.model.AbilityUi
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonDetailUi
 
@@ -45,13 +44,13 @@ fun AbilityComponent(
 @Preview
 @Composable
 fun AbilityComponentPreview() {
-    val pokemon = MockDataSource().getPokemonDetailDto().toPokemonDetailUi()
-    val typeColorsGradientForAbilities = Brush.horizontalGradient(
-        colors = pokemon.typeColorsForAbilities(),
-        startX = 0f, endX = 250f
-    )
-    AbilityComponent(
-        modifier = Modifier,
-        ability = pokemon.abilities.first(), gradientBrush = typeColorsGradientForAbilities
-    )
+//    val pokemon = MockDataSource().getPokemonDetailDto().toPokemonDetailUi()
+//    val typeColorsGradientForAbilities = Brush.horizontalGradient(
+//        colors = pokemon.typeColorsForAbilities(),
+//        startX = 0f, endX = 250f
+//    )
+//    AbilityComponent(
+//        modifier = Modifier,
+//        ability = pokemon.abilities.first(), gradientBrush = typeColorsGradientForAbilities
+//    )
 }

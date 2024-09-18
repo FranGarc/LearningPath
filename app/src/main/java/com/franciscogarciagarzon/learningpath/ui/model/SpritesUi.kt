@@ -1,6 +1,6 @@
 package com.franciscogarciagarzon.learningpath.ui.model
 
-import com.franciscogarciagarzon.learningpath.domain.model.SpritesDto
+import com.franciscogarciagarzon.learningpath.domain.model.Sprites
 import com.franciscogarciagarzon.learningpath.domain.model.URL
 
 data class SpritesUi(
@@ -41,7 +41,7 @@ data class SpriteSet(
     val back: URL = "",
 )
 
-fun SpritesDto.toSpritesUi() = SpritesUi(
+fun Sprites.toSpritesUi() = SpritesUi(
     male = SpriteSet(
         front = this.frontDefault,
         back = this.backDefault

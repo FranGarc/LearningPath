@@ -1,8 +1,8 @@
 package com.franciscogarciagarzon.learningpath.domain.model
 
-import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonDao
+import com.franciscogarciagarzon.learningpath.data.remote.model.PokemonDto
 
-data class PokemonDto(
+data class Pokemon(
     val defaultSprite: String,
     val name: String,
     val url: URL
@@ -18,8 +18,8 @@ fun pokemonUrlToSpriteUrl(url: String): String {
 
 }
 
-fun PokemonDao.toPokemonDto(): PokemonDto {
-    return PokemonDto(
+fun PokemonDto.toPokemon(): Pokemon {
+    return Pokemon(
         defaultSprite = pokemonUrlToSpriteUrl(this.url),
         name = this.name,
         url = this.url

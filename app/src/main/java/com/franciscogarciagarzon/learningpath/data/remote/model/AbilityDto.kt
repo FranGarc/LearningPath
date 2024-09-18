@@ -1,18 +1,18 @@
 package com.franciscogarciagarzon.learningpath.data.remote.model
 
 
-import com.franciscogarciagarzon.learningpath.domain.model.AbilityDto
+import com.franciscogarciagarzon.learningpath.domain.model.Ability
 import com.google.gson.annotations.SerializedName
 
-data class AbilityDao(
+data class AbilityDto(
     @SerializedName("name")
     val name: String,
     @SerializedName("url")
     val url: String
 )
 
-fun AbilityDao.toAbilityDto(): AbilityDto {
-    return AbilityDto(
+fun AbilityDto.toAbilityDto(): Ability {
+    return Ability(
         name = this.name,
         abilityUrl = this.url
     )

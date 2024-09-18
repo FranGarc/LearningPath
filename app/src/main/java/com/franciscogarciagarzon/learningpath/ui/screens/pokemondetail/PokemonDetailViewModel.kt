@@ -3,7 +3,7 @@ package com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetail
 import com.franciscogarciagarzon.learningpath.domain.model.Result
 import com.franciscogarciagarzon.learningpath.domain.usecase.PokemonDetailUseCase
 import com.franciscogarciagarzon.learningpath.ui.model.StateWrapper
@@ -27,7 +27,7 @@ class PokemonDetailViewModel @Inject constructor(
     val tabs = listOf("About", "Base Stats")
 
 
-    private var _uiState: MutableStateFlow<StateWrapper<PokemonDetailDto>> = MutableStateFlow(StateWrapper.Nothing)
+    private var _uiState: MutableStateFlow<StateWrapper<PokemonDetail>> = MutableStateFlow(StateWrapper.Nothing)
     val uiState = _uiState
     fun getPokemonDetail(pokemonId: String) {
         viewModelScope.launch(Dispatchers.IO) {

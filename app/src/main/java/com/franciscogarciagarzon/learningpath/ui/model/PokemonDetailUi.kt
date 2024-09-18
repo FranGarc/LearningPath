@@ -1,7 +1,7 @@
 package com.franciscogarciagarzon.learningpath.ui.model
 
 import androidx.compose.ui.graphics.Color
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetail
 import com.franciscogarciagarzon.learningpath.domain.model.URL
 import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
 import com.franciscogarciagarzon.learningpath.ui.extensions.darkenBy
@@ -44,7 +44,7 @@ data class PokemonDetailUi(
 //    }
 }
 
-fun PokemonDetailDto.toPokemonDetailUi() = PokemonDetailUi(
+fun PokemonDetail.toPokemonDetailUi() = PokemonDetailUi(
     id = this.id,
     name = this.name.capitalizeLP(),
     height = this.height * 10,

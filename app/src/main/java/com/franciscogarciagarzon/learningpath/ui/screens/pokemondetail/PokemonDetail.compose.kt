@@ -20,7 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.franciscogarciagarzon.learningpath.R
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetail
 import com.franciscogarciagarzon.learningpath.ui.model.toStatsUi
 import com.franciscogarciagarzon.learningpath.ui.screens.components.BoldLabel
 import com.franciscogarciagarzon.learningpath.ui.screens.components.RegularLabel
@@ -28,7 +28,7 @@ import com.franciscogarciagarzon.learningpath.ui.screens.components.RemoteImage
 
 @Composable
 fun PokemonDetail(
-    pokemonDetail: PokemonDetailDto,
+    pokemonDetail: PokemonDetail,
     innerPadding: PaddingValues,
 ) {
     val scrollState = rememberScrollState()
@@ -118,7 +118,7 @@ fun PokemonDetail(
 @Preview
 @Composable
 fun DetailPreview() {
-    val pokemonDetail = PokemonDetailDto(weight = 10000000, height = 10000)
+    val pokemonDetail = PokemonDetail(weight = 10000000, height = 10000)
     val innerPadding = PaddingValues()
     PokemonDetail(pokemonDetail, innerPadding)
 

@@ -3,7 +3,7 @@ package com.franciscogarciagarzon.learningpath.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class TypeDao(
+data class TypeDto(
     @SerializedName("slot")
     val slot: Int,
     @SerializedName("type")
@@ -11,7 +11,7 @@ data class TypeDao(
 )
 
 
-fun List<TypeDao>.toDomainTypes(): List<String> {
+fun List<TypeDto>.toDomainTypes(): List<String> {
     val numberOfTypes = this.size
     val listOfTypes = mutableListOf<String>()
     listOfTypes.add(this.first().type.name)

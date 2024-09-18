@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetailDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonDetail
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonDetailUi
 import com.franciscogarciagarzon.learningpath.ui.model.StateWrapper
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonDetailUi
@@ -47,7 +47,7 @@ fun PokemonDetail(
 
     when (pokemonDetailStateFlow) {
         is StateWrapper.Success -> {
-            pokemonDetail = (pokemonDetailStateFlow as StateWrapper.Success<PokemonDetailDto>).value.toPokemonDetailUi()
+            pokemonDetail = (pokemonDetailStateFlow as StateWrapper.Success<PokemonDetail>).value.toPokemonDetailUi()
             Screen(
                 pokemonDetail = pokemonDetail,
                 navigateUp = navigateUp,
@@ -119,5 +119,5 @@ fun Screen(
 @Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
 @Composable
 fun PreviewDetail() {
-    Screen(pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(), navigateUp = {}, tabs = listOf("About", "Base Stats"), tabIndex = 1, updateTabIndexBasedOnSwipe = {}, onClickedTab = { })
+//    Screen(pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(), navigateUp = {}, tabs = listOf("About", "Base Stats"), tabIndex = 1, updateTabIndexBasedOnSwipe = {}, onClickedTab = { })
 }

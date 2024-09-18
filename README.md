@@ -24,3 +24,6 @@ The lesson statements can be found in this repository's [wiki](https://github.co
 
 The Lessons won't actually "teach" in the lecture sense. The structure includes the topic/s the lesson will be all about; the tasks to be completed; Tips & Advice with generic hints; They do have some advice, a list of Research Terms that will help when looking up how to do the task and also what to look for if you want to deepen your understanding of them.
 
+## Errata:
+
+* Lessons 5, 6, and 8 used "DAO" and "DTO" wrongly. The wiki have been updated, but the code reflecting said changes will not be in those branches. A new commit in Develop branch will fix this.

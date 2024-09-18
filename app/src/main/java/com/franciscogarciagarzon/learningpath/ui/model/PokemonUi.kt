@@ -1,6 +1,6 @@
 package com.franciscogarciagarzon.learningpath.ui.model
 
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonDto
+import com.franciscogarciagarzon.learningpath.domain.model.Pokemon
 import com.franciscogarciagarzon.learningpath.domain.model.URL
 
 data class PokemonUi(
@@ -26,7 +26,7 @@ fun pokemonUrlToSpriteUrl(pokemonUrl: URL): URL {
 
 }
 
-fun PokemonDto.toPokemonUi() = PokemonUi(
+fun Pokemon.toPokemonUi() = PokemonUi(
     defaultSprite = pokemonUrlToSpriteUrl(this.url),
     name = this.name,
     url = this.url

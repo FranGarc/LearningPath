@@ -85,7 +85,7 @@ fun PokemonListCard(pokemon: PokemonUi, clickAction: () -> Unit) {
 @Composable
 fun PokemonListCardPreview() {
     PokemonListCard(
-        pokemon = MockDataSource().getPokemonListDto().toPokemonListUi().pokemons.first(),
+        pokemon = MockDataSource().getMockPokemonList().toPokemonListUi().pokemons.first(),
         clickAction = {}
     )
 }

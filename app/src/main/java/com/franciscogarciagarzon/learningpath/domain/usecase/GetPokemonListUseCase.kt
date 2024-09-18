@@ -2,7 +2,7 @@ package com.franciscogarciagarzon.learningpath.domain.usecase
 
 import android.util.Log
 import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonList
 import com.franciscogarciagarzon.learningpath.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,10 +11,10 @@ import javax.inject.Inject
 class GetPokemonListUseCase
 @Inject
 constructor(private val datasource: DatasourceAdapter) : PokemonListUseCase {
-    override suspend operator fun invoke(): Flow<Result<PokemonListDto>> {
-        lateinit var datasourceResponse: Result<PokemonListDto>
+    override suspend operator fun invoke(): Flow<Result<PokemonList>> {
+        lateinit var datasourceResponse: Result<PokemonList>
         datasource.getPokemonList().collect { result -> datasourceResponse = result }
-        lateinit var useCaseResponse: Result<PokemonListDto>
+        lateinit var useCaseResponse: Result<PokemonList>
         when (datasourceResponse) {
             is Result.Failure -> {
                 val exception = (datasourceResponse as Result.Failure).throwable
@@ -24,7 +24,7 @@ constructor(private val datasource: DatasourceAdapter) : PokemonListUseCase {
             }
 
             is Result.Success -> {
-                val payload = (datasourceResponse as Result.Success<PokemonListDto>).value
+                val payload = (datasourceResponse as Result.Success<PokemonList>).value
                 val listSize = payload.pokemons.size
 
                 useCaseResponse = if (listSize > 0) {
@@ -41,5 +41,5 @@ constructor(private val datasource: DatasourceAdapter) : PokemonListUseCase {
 }
 
 interface PokemonListUseCase {
-    suspend operator fun invoke(): Flow<Result<PokemonListDto>>
+    suspend operator fun invoke(): Flow<Result<PokemonList>>
 }

@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
-import com.franciscogarciagarzon.learningpath.domain.model.PokemonListDto
 import com.franciscogarciagarzon.learningpath.ui.model.PokemonListUi
 import com.franciscogarciagarzon.learningpath.ui.model.toPokemonListUi
 import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
@@ -43,7 +42,7 @@ fun PokedexList(
 fun PokedexList1Preview() {
     LearningPathTheme {
         PokedexList(
-            pokemonListData = MockDataSource().getPokemonListDto().toPokemonListUi(),
+            pokemonListData = MockDataSource().getMockPokemonList().toPokemonListUi(),
             innerPadding = PaddingValues(1.dp),
             showPokemonDetail = {}
 

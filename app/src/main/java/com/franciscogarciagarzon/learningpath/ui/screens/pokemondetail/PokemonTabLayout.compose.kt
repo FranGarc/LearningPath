@@ -62,5 +62,5 @@ fun PokemonTabLayout(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TabLayoutPreview() {
-    PokemonTabLayout(tabs = listOf("About", "Base Stats"), pokemonDetailUi = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(), tabIndex = 0, onClick = {}, updateTabIndexBasedOnSwipe = {})
+    PokemonTabLayout(tabs = listOf("About", "Base Stats"), pokemonDetailUi = MockDataSource().getPokemonDetail().toPokemonDetailUi(), tabIndex = 0, onClick = {}, updateTabIndexBasedOnSwipe = {})
 }
