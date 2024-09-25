@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.franciscogarciagarzon.learningpath.ui.screens.navigation.ScreenRouter
-import com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail.PokemonDetail
-import com.franciscogarciagarzon.learningpath.ui.screens.pokemonlist.PokedexList
-import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
+import com.franciscogarciagarzon.learningpath.ui.common.navigation.ScreenRouter
+import com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokemonarticle.PokemonDetail
+import com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokedexindex.PokedexList
+import com.franciscogarciagarzon.learningpath.ui.common.theme.LearningPathTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

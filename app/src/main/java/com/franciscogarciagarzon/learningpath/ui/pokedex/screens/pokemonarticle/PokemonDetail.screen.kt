@@ -1,0 +1,122 @@
+package com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokemonarticle
+
+import android.content.res.Configuration
+import android.util.Log
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.franciscogarciagarzon.learningpath.domain.model.PokemonArticle
+import com.franciscogarciagarzon.learningpath.ui.pokedex.model.PokemonDetailUi
+import com.franciscogarciagarzon.learningpath.ui.pokedex.model.StateWrapper
+import com.franciscogarciagarzon.learningpath.ui.pokedex.model.toPokemonDetailUi
+import com.franciscogarciagarzon.learningpath.ui.common.components.ErrorDialog
+import com.franciscogarciagarzon.learningpath.ui.common.components.LoadingIndicator
+import com.franciscogarciagarzon.learningpath.ui.common.navigation.TopNavBar
+import com.franciscogarciagarzon.learningpath.ui.common.theme.LearningPathTheme
+
+
+@Composable
+fun PokemonDetail(
+    id: String, navigateUp: () -> Unit = {}, viewModel: PokemonDetailViewModel = hiltViewModel()
+) {
+
+    val pokemonDetailStateFlow by viewModel.uiState.collectAsState()
+    lateinit var pokemonDetail: PokemonDetailUi
+    DisposableEffect(key1 = Unit) {
+        Log.d("PokemonDetail.screen", "DisposableEffect")
+        viewModel.getPokemonDetail(pokemonId = id)
+        onDispose {
+            Log.d("PokemonDetail.screen", "DisposableEffect onDispose")
+        }
+    }
+
+
+    val tabs = viewModel.tabs
+    val tabIndex = viewModel.tabIndex.collectAsState()
+    val onClickedTab: (PokemonDetailUserEvent) -> Unit = viewModel::onEvent
+//    val onClickedTab: (Int) -> Unit = viewModel::updateTabIndex
+
+
+    when (pokemonDetailStateFlow) {
+        is StateWrapper.Success -> {
+            pokemonDetail = (pokemonDetailStateFlow as StateWrapper.Success<PokemonArticle>).value.toPokemonDetailUi()
+            Screen(
+                pokemonDetail = pokemonDetail,
+                navigateUp = navigateUp,
+                tabs = tabs,
+                tabIndex = tabIndex.value,
+                updateTabIndexBasedOnSwipe = viewModel::onEvent, onClickedTab = onClickedTab
+            )
+        }
+
+        is StateWrapper.Error -> {
+            val errorMessage = (pokemonDetailStateFlow as StateWrapper.Error).message
+            Log.w("PokemonDetail.screen", "state: Error message $errorMessage")
+            ErrorDialog(message = errorMessage, onDismissRequest = viewModel::resetUiStatae, onRetry = { viewModel.getPokemonDetail(id) })
+
+        }
+
+        is StateWrapper.Loading -> {
+            Log.d("PokemonDetail.screen", "state: Loading")
+            LoadingIndicator()
+        }
+
+        is StateWrapper.Nothing -> {
+            Log.d("PokemonDetail.screen", "state: Nothing")
+            Screen(
+                pokemonDetail = PokemonDetailUi(),
+                navigateUp = navigateUp,
+                tabs = tabs,
+                tabIndex = tabIndex.value,
+                updateTabIndexBasedOnSwipe = viewModel::onEvent,
+                onClickedTab = onClickedTab
+            )
+        }
+
+    }
+
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Screen(
+    pokemonDetail: PokemonDetailUi,
+    navigateUp: () -> Unit = {},
+    tabs: List<String>,
+    tabIndex: Int,
+    onClickedTab: (PokemonDetailUserEvent) -> Unit,
+    updateTabIndexBasedOnSwipe: (PokemonDetailUserEvent) -> Unit,
+) {
+    LearningPathTheme {
+        Scaffold(topBar = {
+            TopNavBar(
+                title = pokemonDetail.name, modifier = Modifier, upNavigation = navigateUp
+            )
+        }, content = { innerPadding ->
+            Log.d("PokemonDetailScreen", "Composable pokemonDetail: $pokemonDetail")
+            if (pokemonDetail.isLoaded()) PokemonInfo(
+                pokemonDetail, innerPadding, tabs = tabs, tabIndex = tabIndex,
+                updateTabIndexBasedOnSwipe = updateTabIndexBasedOnSwipe,
+                onClickedTab = onClickedTab
+            )
+        })
+    }
+}
+
+@Preview(name = "PIXEL Dark", device = Devices.PIXEL, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "PIXEL", device = Devices.PIXEL, showSystemUi = true)
+@Preview(name = "PIXEL2", device = Devices.PIXEL_2, showSystemUi = true)
+@Preview(name = "PIXEL3", device = Devices.PIXEL_3, showSystemUi = true)
+@Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
+@Composable
+fun PreviewDetail() {
+//    Screen(pokemonDetail = MockDataSource().getPokemonDetailDto().toPokemonDetailUi(), navigateUp = {}, tabs = listOf("About", "Base Stats"), tabIndex = 1, updateTabIndexBasedOnSwipe = {}, onClickedTab = { })
+}

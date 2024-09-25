@@ -92,10 +92,11 @@ dependencies {
     implementation libs.androidx.hilt.navigation.compose
 
     // room
-    implementation libs.androidx.room.runtime
-    ksp libs.androidx.room.compiler
+    implementation libs.room.runtime
+    implementation libs.room.coroutines
+    ksp libs.room.compiler
 // optional - Test helpers
-    testImplementation libs.androidx.room.testing
+    testImplementation libs.room.testing
 
     // Test
     testImplementation libs.assertk

@@ -1,0 +1,20 @@
+package com.franciscogarciagarzon.learningpath.domain.model
+
+data class PokemonArticle(
+    val baseExperience: Int = -1,
+    val height: Int = -1,
+    val name: String = "pokemonDto",
+    val sprites: Sprites = Sprites(),
+    val stats: Stats = Stats(),
+    val weight: Int = -1,
+    val types: List<String> = listOf("normal", "ghost"),
+    val id: Int = -1,
+    val abilities: List<Ability> = listOf()
+) {
+    fun isLoaded(): Boolean = (id != -1)
+}
+
+
+
+
+
