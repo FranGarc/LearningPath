@@ -1,9 +1,9 @@
 package com.franciscogarciagarzon.learningpath.domain
 
-import com.franciscogarciagarzon.learningpath.domain.usecase.GetPokemonDetailUseCase
-import com.franciscogarciagarzon.learningpath.domain.usecase.GetPokemonListUseCase
-import com.franciscogarciagarzon.learningpath.domain.usecase.PokemonDetailUseCase
-import com.franciscogarciagarzon.learningpath.domain.usecase.PokemonListUseCase
+import com.franciscogarciagarzon.learningpath.domain.usecase.GetPokemonArticleUseCase
+import com.franciscogarciagarzon.learningpath.domain.usecase.GetPokedexIndexListUseCase
+import com.franciscogarciagarzon.learningpath.domain.usecase.PokemonArticleUseCase
+import com.franciscogarciagarzon.learningpath.domain.usecase.PokedexIndexListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,12 +13,12 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object UseCasesModule {
     @Provides
-    fun provideGetPokemonListUseCase(datasource: DatasourceAdapter): PokemonListUseCase {
-        return GetPokemonListUseCase(datasource)
+    fun provideGetPokedexIndexListUseCase(datasource: DatasourceAdapter): PokedexIndexListUseCase {
+        return GetPokedexIndexListUseCase(datasource)
     }
 
     @Provides
-    fun provideGetPokemonDetailUseCase(datasource: DatasourceAdapter): PokemonDetailUseCase {
-        return GetPokemonDetailUseCase(datasource)
+    fun provideGetPokemonArticleUseCase(datasource: DatasourceAdapter): PokemonArticleUseCase {
+        return GetPokemonArticleUseCase(datasource)
     }
 }

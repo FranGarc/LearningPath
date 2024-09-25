@@ -18,6 +18,7 @@ android-junit5="1.9.3.0"
 
 android-core="1.12.0"
 kotlin-bom = "1.9.0"
+ksp="1.9.0-1.0.13" #first version needs to match kotlin-bom
 lifecycle-runtime-ktx = "2.6.2"
 okhttp = "4.10.0"
 material3 = "1.1.2"
@@ -26,7 +27,6 @@ palette-ktx = "1.0.0"
 retrofit = "2.9.0"
 ui = "1.5.4"
 room ="2.6.1"
-ksp="1.9.23-1.0.19"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -38,9 +38,7 @@ androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit-vers
 androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "palette-ktx" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 
 androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
@@ -53,6 +51,12 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-coroutines = { module = "androidx.room:room-ktx", version.ref = "room" }
+
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter-api" }

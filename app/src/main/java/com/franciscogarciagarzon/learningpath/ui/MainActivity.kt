@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.franciscogarciagarzon.learningpath.ui.screens.navigation.ScreenRouter
-import com.franciscogarciagarzon.learningpath.ui.screens.pokemondetail.PokemonDetail
-import com.franciscogarciagarzon.learningpath.ui.screens.pokemonlist.PokedexList
-import com.franciscogarciagarzon.learningpath.ui.theme.LearningPathTheme
+import com.franciscogarciagarzon.learningpath.ui.common.navigation.ScreenRouter
+import com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokemonarticle.PokemonArticle
+import com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokedexindex.PokedexIndexPage
+import com.franciscogarciagarzon.learningpath.ui.common.theme.LearningPathTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,20 +29,20 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
                     val navController = rememberNavController()
                     NavHost(
-                        navController = navController, startDestination = ScreenRouter.PokemonList.route
+                        navController = navController, startDestination = ScreenRouter.PokedexIndex.route
                     ) {
-                        composable(ScreenRouter.PokemonList.route) {
-                            PokedexList(showPokemonDetail = { pokemonName ->
+                        composable(ScreenRouter.PokedexIndex.route) {
+                            PokedexIndexPage(showPokemonArticle = { pokemonName ->
                                 Log.d("MainActivity", "navigation lambda showPokemonDetail ($pokemonName)")
                                 navController.navigate(
-                                    route = ScreenRouter.PokemonDetail.createRoute(pokemonName)
+                                    route = ScreenRouter.PokemonArticle.createRoute(pokemonName)
                                 )
-                            }, favNavigation = { navController.navigate(route = ScreenRouter.PokemonDetail.createRoute("ogerpon-cornerstone-mask")) })
+                            }, favNavigation = { navController.navigate(route = ScreenRouter.PokemonArticle.createRoute("ogerpon-cornerstone-mask")) })
                         }
-                        composable(route = ScreenRouter.PokemonDetail.route) { backStackEntry ->
+                        composable(route = ScreenRouter.PokemonArticle.route) { backStackEntry ->
                             val pokemonName = backStackEntry.arguments?.getString("pokemonName")
                             requireNotNull(pokemonName)
-                            PokemonDetail(id = pokemonName, navigateUp = {
+                            PokemonArticle(id = pokemonName, navigateUp = {
                                 navController.popBackStack()
                             })
                             Icons.Default.Favorite

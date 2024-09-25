@@ -1,0 +1,19 @@
+package com.franciscogarciagarzon.learningpath.ui.pokedex.model
+
+import com.franciscogarciagarzon.learningpath.domain.model.Ability
+import com.franciscogarciagarzon.learningpath.domain.model.URL
+import com.franciscogarciagarzon.learningpath.ui.extensions.capitalizeLP
+
+data class AbilityUi(
+    val name: String,
+    val url: URL
+) {
+    fun printableName(): String {
+        return this.name.replace("-", " ").capitalizeLP()
+    }
+}
+
+fun Ability.toAbilityUi() = AbilityUi(
+    name = this.name,
+    url = this.abilityUrl
+)

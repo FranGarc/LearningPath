@@ -1,0 +1,51 @@
+package com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokedexindex
+
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.franciscogarciagarzon.learningpath.data.mock.MockDataSource
+import com.franciscogarciagarzon.learningpath.ui.pokedex.model.PokemonListUi
+import com.franciscogarciagarzon.learningpath.ui.pokedex.model.toPokemonListUi
+import com.franciscogarciagarzon.learningpath.ui.common.theme.LearningPathTheme
+
+@Composable
+fun PokedexIndexPage(
+    indexListData: PokemonListUi,
+    innerPadding: PaddingValues,
+    showPokemonDetail: (pokemonName: String) -> Unit
+) {
+    LazyColumn(
+        modifier = androidx.compose.ui.Modifier.padding(innerPadding),
+        contentPadding = PaddingValues(10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        items(indexListData.pokemons.size) { index ->
+            val pokemon = indexListData.pokemons[index]
+            PokedexIndexCard(pokedexIndexItem = pokemon, clickAction = {
+                Log.d("ListItem", "clicked on ${pokemon.name}")
+                showPokemonDetail(pokemon.name)
+            })
+
+        }
+
+    }
+}
+
+@Preview(name = "NEXUS_6", device = Devices.NEXUS_6, showSystemUi = true)
+@Composable
+fun PokedexIndexPagePreview() {
+    LearningPathTheme {
+        PokedexIndexPage(
+            indexListData = MockDataSource().getMockPokedexIndexList().toPokemonListUi(),
+            innerPadding = PaddingValues(1.dp),
+            showPokemonDetail = {}
+
+        )
+    }
+}
