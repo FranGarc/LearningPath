@@ -2,7 +2,6 @@ package com.franciscogarciagarzon.learningpath.ui.pokedex.model
 
 import com.franciscogarciagarzon.learningpath.domain.model.PokedexIndexItem
 import com.franciscogarciagarzon.learningpath.domain.model.URL
-import com.franciscogarciagarzon.learningpath.domain.model.extractId
 
 data class PokedexIndexItemUi(
     val defaultSprite: String,
@@ -19,12 +18,12 @@ fun PokedexIndexItemUi.fallbackSpriteUrl(): URL {
 
 
 fun PokedexIndexItem.toPokedexIndexItemUi() = PokedexIndexItemUi(
-    defaultSprite = calculateSpriteUrlFromId(this.extractId()),
+    defaultSprite = calculateSpriteUrlFromId(this.id),
     name = this.name,
     url = this.url
 )
 
-fun calculateSpriteUrlFromId(id: String): URL {
+fun calculateSpriteUrlFromId(id: Int): URL {
     val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/"
     return "$spriteUrl$id.svg"
 }

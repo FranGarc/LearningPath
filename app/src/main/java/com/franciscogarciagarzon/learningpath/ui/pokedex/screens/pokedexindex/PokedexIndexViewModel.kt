@@ -3,6 +3,7 @@ package com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokedexindex
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.franciscogarciagarzon.learningpath.DispatcherProvider
 import com.franciscogarciagarzon.learningpath.domain.model.PokedexIndexList
 import com.franciscogarciagarzon.learningpath.domain.model.Result
 import com.franciscogarciagarzon.learningpath.domain.usecase.PokedexIndexListUseCase
@@ -18,8 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokedexIndexViewModel @Inject constructor(
-    private val getIndexListUseCase: PokedexIndexListUseCase
-) : ViewModel() {
+    private val getIndexListUseCase: PokedexIndexListUseCase,
+    private val dispatcherProvider: DispatcherProvider,
+    ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<StateWrapper<PokedexIndexList>> = MutableStateFlow(
         StateWrapper.Nothing)
@@ -34,12 +36,12 @@ class PokedexIndexViewModel @Inject constructor(
     }
 
     fun getPokedexIndexList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherProvider.io) {
             _uiState.value = StateWrapper.Loading
             delay(1000L)
 
             Log.d("PokedexIndexViewModel", "getPokemonList launched")
-            getIndexListUseCase().flowOn(Dispatchers.IO).catch { e ->
+            getIndexListUseCase().catch { e ->
                 Log.e("PokedexIndexViewModel", "exception: ${e.javaClass} || message: ${e.message}", e)
             }.collect { result ->
                 when (result) {
@@ -49,7 +51,6 @@ class PokedexIndexViewModel @Inject constructor(
                         Log.w("PokedexIndexViewModel", "getPokedexIndexList() error ${result.message}")
                     }
                 }
-
             }
         }
     }

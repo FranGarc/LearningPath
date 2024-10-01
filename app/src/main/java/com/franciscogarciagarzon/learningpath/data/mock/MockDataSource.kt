@@ -5,7 +5,7 @@ import com.franciscogarciagarzon.learningpath.domain.model.PokemonArticle
 import com.franciscogarciagarzon.learningpath.domain.model.Sprites
 import com.franciscogarciagarzon.learningpath.domain.model.Stat
 import com.franciscogarciagarzon.learningpath.domain.model.Stats
-import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
+import com.franciscogarciagarzon.learningpath.domain.RepositoryAdapter
 import com.franciscogarciagarzon.learningpath.domain.model.PokedexIndexItem
 import com.franciscogarciagarzon.learningpath.domain.model.PokedexIndexList
 import com.franciscogarciagarzon.learningpath.domain.model.Result
@@ -13,36 +13,36 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class MockDataSource : DatasourceAdapter {
+class MockDataSource : RepositoryAdapter {
 
     private val pokedexIndexItemList = PokedexIndexList(
         pokedexIndexItems = listOf(
-            PokedexIndexItem(name = "bulbasaur" , url = "https://pokeapi.co/api/v2/pokemon/1/"),
-            PokedexIndexItem(name = "ivysaur",  url = "https://pokeapi.co/api/v2/pokemon/2/"),
-            PokedexIndexItem(name = "venusaur", url = "https://pokeapi.co/api/v2/pokemon/3/"),
-            PokedexIndexItem(name = "charmander", url = "https://pokeapi.co/api/v2/pokemon/4/"),
-            PokedexIndexItem(name = "charmeleon", url = "https://pokeapi.co/api/v2/pokemon/5/"),
-            PokedexIndexItem(name = "charizard", url = "https://pokeapi.co/api/v2/pokemon/6/"),
-            PokedexIndexItem(name = "squirtle",  url = "https://pokeapi.co/api/v2/pokemon/7/"),
-            PokedexIndexItem(name = "wartortle", url = "https://pokeapi.co/api/v2/pokemon/8/"),
-            PokedexIndexItem(name = "blastoise", url = "https://pokeapi.co/api/v2/pokemon/9/"),
-            PokedexIndexItem(name = "caterpie", url = "https://pokeapi.co/api/v2/pokemon/10/"),
-            PokedexIndexItem(name = "metapod",  url = "https://pokeapi.co/api/v2/pokemon/11/"),
-            PokedexIndexItem(name = "butterfree", url = "https://pokeapi.co/api/v2/pokemon/12/"),
-            PokedexIndexItem(name = "weedle", url = "https://pokeapi.co/api/v2/pokemon/13/"),
-            PokedexIndexItem(name = "kakuna",  url = "https://pokeapi.co/api/v2/pokemon/14/"),
-            PokedexIndexItem(name = "beedrill", url = "https://pokeapi.co/api/v2/pokemon/15/"),
-            PokedexIndexItem(name = "pidgey",  url = "https://pokeapi.co/api/v2/pokemon/16/"),
-            PokedexIndexItem(name = "pidgeotto", url = "https://pokeapi.co/api/v2/pokemon/17/"),
-            PokedexIndexItem(name = "pidgeot", url = "https://pokeapi.co/api/v2/pokemon/18/"),
-            PokedexIndexItem(name = "rattata",  url = "https://pokeapi.co/api/v2/pokemon/19/"),
-            PokedexIndexItem(name = "raticate", url = "https://pokeapi.co/api/v2/pokemon/20/"),
+            PokedexIndexItem(id=1, name = "bulbasaur" , url = "https://pokeapi.co/api/v2/pokemon/1/"),
+            PokedexIndexItem(id=2, name = "ivysaur",  url = "https://pokeapi.co/api/v2/pokemon/2/"),
+            PokedexIndexItem(id=3, name = "venusaur", url = "https://pokeapi.co/api/v2/pokemon/3/"),
+            PokedexIndexItem(id=4, name = "charmander", url = "https://pokeapi.co/api/v2/pokemon/4/"),
+            PokedexIndexItem(id=5, name = "charmeleon", url = "https://pokeapi.co/api/v2/pokemon/5/"),
+            PokedexIndexItem(id=6, name = "charizard", url = "https://pokeapi.co/api/v2/pokemon/6/"),
+            PokedexIndexItem(id=7, name = "squirtle",  url = "https://pokeapi.co/api/v2/pokemon/7/"),
+            PokedexIndexItem(id=8, name = "wartortle", url = "https://pokeapi.co/api/v2/pokemon/8/"),
+            PokedexIndexItem(id=9, name = "blastoise", url = "https://pokeapi.co/api/v2/pokemon/9/"),
+            PokedexIndexItem(id=10, name = "caterpie", url = "https://pokeapi.co/api/v2/pokemon/10/"),
+            PokedexIndexItem(id=11, name = "metapod",  url = "https://pokeapi.co/api/v2/pokemon/11/"),
+            PokedexIndexItem(id=12, name = "butterfree", url = "https://pokeapi.co/api/v2/pokemon/12/"),
+            PokedexIndexItem(id=13, name = "weedle", url = "https://pokeapi.co/api/v2/pokemon/13/"),
+            PokedexIndexItem(id=14, name = "kakuna",  url = "https://pokeapi.co/api/v2/pokemon/14/"),
+            PokedexIndexItem(id=15, name = "beedrill", url = "https://pokeapi.co/api/v2/pokemon/15/"),
+            PokedexIndexItem(id=16, name = "pidgey",  url = "https://pokeapi.co/api/v2/pokemon/16/"),
+            PokedexIndexItem(id=17, name = "pidgeotto", url = "https://pokeapi.co/api/v2/pokemon/17/"),
+            PokedexIndexItem(id=18, name = "pidgeot", url = "https://pokeapi.co/api/v2/pokemon/18/"),
+            PokedexIndexItem(id=19, name = "rattata",  url = "https://pokeapi.co/api/v2/pokemon/19/"),
+            PokedexIndexItem(id=20, name = "raticate", url = "https://pokeapi.co/api/v2/pokemon/20/"),
             )
     )
 
 
     private val pokemonArticle = PokemonArticle(
-
+        id = 132,
         name = "Ditto",
         baseExperience = 101,
         height = 3,
@@ -98,7 +98,7 @@ class MockDataSource : DatasourceAdapter {
 
     fun getMockPokedexIndexList(): PokedexIndexList = PokedexIndexList(pokedexIndexItemList.pokedexIndexItems.map { pokemon ->
         PokedexIndexItem(
-            name = pokemon.name, url = pokemon.url
+           id = pokemon.id, name = pokemon.name, url = pokemon.url
         )
     })
 

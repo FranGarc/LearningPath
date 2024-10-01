@@ -1,11 +1,16 @@
 package com.franciscogarciagarzon.learningpath.di
 
+import coil.decode.DataSource
+import com.franciscogarciagarzon.learningpath.DefaultDispatcherProvider
+import com.franciscogarciagarzon.learningpath.DispatcherProvider
+import com.franciscogarciagarzon.learningpath.data.RemoteDataSourceAdapter
+import com.franciscogarciagarzon.learningpath.data.Repository
 import com.franciscogarciagarzon.learningpath.data.remote.PokeApi
 import com.franciscogarciagarzon.learningpath.data.remote.PokemonService
 import com.franciscogarciagarzon.learningpath.data.remote.PokemonServiceImpl
 import com.franciscogarciagarzon.learningpath.data.remote.RemoteDataSource
 import com.franciscogarciagarzon.learningpath.data.remote.RetrofitClient
-import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
+import com.franciscogarciagarzon.learningpath.domain.RepositoryAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,9 +61,21 @@ object AppModule {
     }
 
     @Provides
-    fun provideRemoteDataSource(pokemonService: PokemonService): DatasourceAdapter {
+    fun provideRemoteDataSource(pokemonService: PokemonService): RemoteDataSourceAdapter {
         return RemoteDataSource(pokemonService)
     }
+
+    @Provides
+    fun provideDispatcherProvider(): DispatcherProvider {
+        return DefaultDispatcherProvider()
+    }
+
+    @Provides
+    fun provideRepository(remoteDataSource: RemoteDataSource, dispatcherProvider:  DispatcherProvider): RepositoryAdapter {
+        return Repository(remoteDataSource, dispatcherProvider)
+    }
+
+
 
 
 }

@@ -1,7 +1,7 @@
 package com.franciscogarciagarzon.learningpath.domain.usecase
 
 import android.util.Log
-import com.franciscogarciagarzon.learningpath.domain.DatasourceAdapter
+import com.franciscogarciagarzon.learningpath.domain.RepositoryAdapter
 import com.franciscogarciagarzon.learningpath.domain.model.PokedexIndexList
 import com.franciscogarciagarzon.learningpath.domain.model.Result
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetPokedexIndexListUseCase
 @Inject
-constructor(private val datasource: DatasourceAdapter) : PokedexIndexListUseCase {
+constructor(private val datasource: RepositoryAdapter) : PokedexIndexListUseCase {
     override suspend operator fun invoke(): Flow<Result<PokedexIndexList>> {
         lateinit var datasourceResponse: Result<PokedexIndexList>
         datasource.getPokedexIndexList().collect { result -> datasourceResponse = result }

@@ -3,6 +3,7 @@ package com.franciscogarciagarzon.learningpath.ui.pokedex.screens.pokemonarticle
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.franciscogarciagarzon.learningpath.DispatcherProvider
 import com.franciscogarciagarzon.learningpath.domain.model.PokemonArticle
 import com.franciscogarciagarzon.learningpath.domain.model.Result
 import com.franciscogarciagarzon.learningpath.domain.usecase.PokemonArticleUseCase
@@ -19,8 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonArticleViewModel @Inject constructor(
-    private val getPokemonArticleUseCase: PokemonArticleUseCase
-) : ViewModel() {
+    private val getPokemonArticleUseCase: PokemonArticleUseCase,
+    private val dispatcherProvider: DispatcherProvider,
+
+    ) : ViewModel() {
     private val _tabIndex: MutableStateFlow<Int> = MutableStateFlow(0)
     val tabIndex: StateFlow<Int> = _tabIndex
 
@@ -31,12 +34,12 @@ class PokemonArticleViewModel @Inject constructor(
         StateWrapper.Nothing)
     val uiState = _uiState
     fun getPokemonDetail(pokemonId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherProvider.io) {
             _uiState.value = StateWrapper.Loading
             delay(1000L)
 
             Log.d("PokemonArticleViewModel", "getPokemonDetail launched with id: $pokemonId")
-            getPokemonArticleUseCase(pokemonName = pokemonId).flowOn(Dispatchers.IO).catch { e ->
+            getPokemonArticleUseCase(pokemonName = pokemonId).catch { e ->
                 Log.e("PokemonArticleViewModel", "exception: ${e.message}", e)
             }.collect { result ->
                 when (result) {

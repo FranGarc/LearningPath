@@ -13,12 +13,12 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object UseCasesModule {
     @Provides
-    fun provideGetPokedexIndexListUseCase(datasource: DatasourceAdapter): PokedexIndexListUseCase {
+    fun provideGetPokedexIndexListUseCase(datasource: RepositoryAdapter): PokedexIndexListUseCase {
         return GetPokedexIndexListUseCase(datasource)
     }
 
     @Provides
-    fun provideGetPokemonArticleUseCase(datasource: DatasourceAdapter): PokemonArticleUseCase {
+    fun provideGetPokemonArticleUseCase(datasource: RepositoryAdapter): PokemonArticleUseCase {
         return GetPokemonArticleUseCase(datasource)
     }
 }
